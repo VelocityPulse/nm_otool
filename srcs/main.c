@@ -12,9 +12,39 @@
 
 #include "../incl/ft_nm.h"
 
+void	print_output(int nsyms, int symoff, int stroff, char *ptr)
+{
+	int					i;
+	char				*stringtable;
+	struct nlist_64		*array;
+
+	array = (void *)ptr + symoff;
+
+}
+
 void	handle_magic_64(char *ptr)
 {
-	
+	int						ncmds;
+	int						i;
+	struct mach_header_64	*header;
+	struct load_command		*lc;
+	struct symtab_command	*sym;
+
+	header = (struct mach_header_64 *)ptr;
+	ncmds = header->ncmds;
+	lc = (void *)ptr + sizeof(struct mach_header_64);
+	i = -1;
+	while (++i < ncmds)
+	{
+		if (lc->cmd == LC_SYMTAB)
+		{
+			sym = (struct symtab_command*)lc;
+			print_output(sym->nsyms, sym->symoff, sym->stroff, ptr);
+			break;
+		}
+		lc = (void *) lc + lc->cmdsize;
+	}
+
 }
 
 void	ft_nm(char *ptr)
