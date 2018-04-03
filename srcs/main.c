@@ -19,7 +19,23 @@ void	print_output(int nsyms, int symoff, int stroff, char *ptr)
 	struct nlist_64		*array;
 
 	array = (void *)ptr + symoff;
-
+	stringtable = (void *)ptr + stroff;
+	i = -1;
+	while (++i < nsyms)
+	{
+		char type = array[i].n_type & N_TYPE;
+		if (type == N_UNDF)
+			type = 'U';
+		else if (type == N_ABS)
+			type = 'A';
+		else if (type == N_SECT)
+			; //TODO
+		else if (type == N_PBUD)
+			;
+		else if (type == N_INDR)
+			type = 'I';
+		ft_printf("%016llx [%d] %s\n", array[i].n_value, array[i].n_type, stringtable + array[i].n_un.n_strx);
+	}
 }
 
 void	handle_magic_64(char *ptr)
@@ -44,7 +60,6 @@ void	handle_magic_64(char *ptr)
 		}
 		lc = (void *) lc + lc->cmdsize;
 	}
-
 }
 
 void	ft_nm(char *ptr)
@@ -54,7 +69,7 @@ void	ft_nm(char *ptr)
 	magic_number = *(int *)ptr;
 	ft_printf("magic number : %x\n", magic_number);
 	if (magic_number == MH_MAGIC_64) 
-		; // TODO here
+		handle_magic_64(ptr);
 	else if (magic_number == MH_MAGIC)
 		; // TODO here
 }

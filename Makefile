@@ -20,7 +20,7 @@ OBJS =			$(addprefix objs/, $(FILES:.c=.o))
 
 DEBUG = 		-fsanitize=address
 
-FLAGS =			#-Wall -Werror -Wextra $(DEBUG) TODO UNCOMMENT HERE
+FLAGS =			$(DEBUG)#-Wall -Werror -Wextra $(DEBUG) TODO UNCOMMENT HERE
 
 RM =			rm -rf
 
