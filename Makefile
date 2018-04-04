@@ -6,7 +6,7 @@
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/04 15:19:53 by cchameyr         ###   ########.fr        #
+#    Updated: 2018/04/04 16:42:49 by cchameyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS =			$(addprefix srcs/, $(FILES))
 
 OBJS =			$(addprefix objs/, $(FILES:.c=.o))
 
-DEBUG = 		-fsanitize=address
+DEBUG = 		-g -fsanitize=address
 
 FLAGS =			$(DEBUG)#-Wall -Werror -Wextra $(DEBUG) TODO UNCOMMENT HERE
 

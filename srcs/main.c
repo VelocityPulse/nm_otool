@@ -6,52 +6,11 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/04 15:13:52 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/04 17:10:42 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
-
-char	handle_symtab_sect_64(t_data *nm_data, char n_sect)
-{
-	
-	return (0);
-}
-
-void	print_output(t_data *nm_data, int nsyms, int symoff, int stroff)
-{
-	int					i;
-	char				*stringtable;
-	char				*ptr;
-	struct nlist_64		*array;
-
-	ptr = nm_data->ptr;
-	array = (void *)ptr + symoff;
-	stringtable = (void *)ptr + stroff;
-	trigger_false_pointer(nm_data, (void *)array);
-	trigger_false_pointer(nm_data, (stringtable));
-	i = -1;
-	while (++i < nsyms)
-	{
-		trigger_false_pointer(nm_data, (void *)&array[i]);
-		trigger_false_pointer(nm_data, (void *)stringtable + array[i].n_un.n_strx);
-		char type = array[i].n_type & N_TYPE;
-		if (type == N_UNDF)
-			type = 'U';
-		else if (type == N_ABS)
-			type = 'A';
-		else if (type == N_SECT)
-			type = handle_symtab_sect_64(nm_data, array[i].n_sect);
-		else if (type == N_PBUD)
-			;
-		else if (type == N_INDR)
-			type = 'I';
-		if (type == 'U')
-			ft_printf("                 %c %s\n", type, stringtable + array[i].n_un.n_strx);
-		else
-			ft_printf("%016llx %c %s\n", array[i].n_value, type, stringtable + array[i].n_un.n_strx);
-	}
-}
 
 char	*get_section_name_64(t_data *nm_data, char n_sect)
 {
@@ -72,20 +31,81 @@ char	*get_section_name_64(t_data *nm_data, char n_sect)
 		{
 			struct segment_command_64 *segm;
 			segm = (struct segment_command_64 *)lc;
-			struct section_64 *sect = (void *)segm + sizeof(*segm);
-			j = -1;
-			while (++j < segm->nsects)
+			struct section_64 *sect = (struct section_64*)(segm + 1);
+			j = 0;
+			while (j < segm->nsects)
 			{
 				trigger_false_pointer(nm_data, (void *)sect);
-				if (++n_checked == n_sect)
+				n_checked++;
+				if (n_checked == n_sect)
 					return (sect->sectname);
-				sect = (void *)sect + sect->size;
+				sect++;
+				j++;
 			}
 		}
 		lc = (void *)lc + lc->cmdsize;
 	}
 	return (NULL);
 }
+
+char	handle_symtab_sect_64(t_data *nm_data, char n_sect)
+{
+	char	*sectname;
+
+	if ((sectname = get_section_name_64(nm_data, n_sect)) == NULL)
+	{
+		ft_putstr("ft_nm error : n_sect not found");
+		exit(EXIT_FAILURE);
+	}
+	if (ft_strncmp(sectname, SECT_TEXT, ft_strlen(SECT_TEXT)) == 0)
+		return 'T';
+	if (ft_strncmp(sectname, SECT_DATA, ft_strlen(SECT_DATA)) == 0)
+		return 'D';
+	if (ft_strncmp(sectname, SECT_BSS, ft_strlen(SECT_BSS)) == 0)
+		return 'B';
+	if (ft_strncmp(sectname, SECT_COMMON, ft_strlen(SECT_COMMON)) == 0)
+		return 'C';
+	return ('S');
+}
+
+void	print_output(t_data *nm_data, int nsyms, int symoff, int stroff)
+{
+	int					i;
+	char				*stringtable;
+	char				*ptr;
+	struct nlist_64		*array;
+
+	ptr = nm_data->ptr;
+	array = (void *)ptr + symoff;
+	stringtable = (void *)ptr + stroff;
+	trigger_false_pointer(nm_data, (void *)array);
+	trigger_false_pointer(nm_data, (stringtable));
+	i = -1;
+	while (++i < nsyms)
+	{
+		trigger_false_pointer(nm_data, (void *)&array[i]);
+		trigger_false_pointer(nm_data, (void *)stringtable + array[i].n_un.n_strx);
+		char type = array[i].n_type & N_TYPE;
+		if ((array[i].n_type & N_STAB) == 0)
+		{
+			if (type == N_UNDF)
+				type = 'U';
+			else if (type == N_ABS)
+				type = 'A';
+			else if (type == N_SECT)
+				type = handle_symtab_sect_64(nm_data, array[i].n_sect);
+			else if (type == N_PBUD)
+				;
+			else if (type == N_INDR)
+				type = 'I';
+			if (type == 'U')
+				ft_printf("                 %c %s\n", type, stringtable + array[i].n_un.n_strx);
+			else
+				ft_printf("%016llx %c %s\n", array[i].n_value, type, stringtable + array[i].n_un.n_strx);
+		}
+	}
+}
+
 
 void	handle_magic_64(t_data *nm_data, char *ptr)
 {
