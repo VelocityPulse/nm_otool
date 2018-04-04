@@ -6,13 +6,14 @@
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/02 16:29:49 by cchameyr         ###   ########.fr        #
+#    Updated: 2018/04/04 15:19:53 by cchameyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =			ft_nm
 
 FILES =			main.c \
+				check_security.c
 
 SRCS =			$(addprefix srcs/, $(FILES))
 

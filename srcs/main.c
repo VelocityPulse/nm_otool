@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/04 14:28:32 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/04 15:13:52 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,13 @@ void	print_output(t_data *nm_data, int nsyms, int symoff, int stroff)
 	ptr = nm_data->ptr;
 	array = (void *)ptr + symoff;
 	stringtable = (void *)ptr + stroff;
+	trigger_false_pointer(nm_data, (void *)array);
+	trigger_false_pointer(nm_data, (stringtable));
 	i = -1;
 	while (++i < nsyms)
 	{
+		trigger_false_pointer(nm_data, (void *)&array[i]);
+		trigger_false_pointer(nm_data, (void *)stringtable + array[i].n_un.n_strx);
 		char type = array[i].n_type & N_TYPE;
 		if (type == N_UNDF)
 			type = 'U';
@@ -63,6 +67,7 @@ char	*get_section_name_64(t_data *nm_data, char n_sect)
 	n_checked = 0;
 	while (++i < ncmds)
 	{
+		trigger_false_pointer(nm_data, (void *)lc);
 		if (lc->cmd == LC_SEGMENT_64)
 		{
 			struct segment_command_64 *segm;
@@ -71,8 +76,8 @@ char	*get_section_name_64(t_data *nm_data, char n_sect)
 			j = -1;
 			while (++j < segm->nsects)
 			{
-				n_checked++;
-				if (n_checked == n_sect)
+				trigger_false_pointer(nm_data, (void *)sect);
+				if (++n_checked == n_sect)
 					return (sect->sectname);
 				sect = (void *)sect + sect->size;
 			}
@@ -93,6 +98,7 @@ void	handle_magic_64(t_data *nm_data, char *ptr)
 	header = (struct mach_header_64 *)ptr;
 	nm_data->header = (void *)header;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
+	trigger_false_pointer(nm_data, (void *)lc);
 	nm_data->first_load_command = lc;
 	ncmds = header->ncmds;
 	i = -1;
@@ -105,10 +111,9 @@ void	handle_magic_64(t_data *nm_data, char *ptr)
 			break;
 		}
 		lc = (void *) lc + lc->cmdsize;
+		trigger_false_pointer(nm_data, (void *)lc);
 	}
 }
-
-
 
 void	ft_nm(t_data *nm_data, char *ptr)
 {
@@ -156,32 +161,11 @@ int		main(int argc, char **argv)
 		ft_printf("mmap error\n");
 		return (EXIT_FAILURE);
 	}
+	nm_data.ptr_offset = buff.st_size;
 	ft_nm(&nm_data, ptr);
 	if (munmap(ptr, buff.st_size) < 0)
 	{
 		ft_printf("munmap error\n");
 		return (EXIT_FAILURE);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

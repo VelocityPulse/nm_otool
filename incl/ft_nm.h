@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/04 14:27:13 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/04 15:01:08 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@
 typedef struct	s_data
 {
 	char	*ptr;
+	int		ptr_offset;
 	char	arch;
 	void	*header;
 	void	*first_load_command;
 }				t_data;
+
+void	trigger_false_pointer(t_data *nm_data, char *ptr);
 
 #endif
