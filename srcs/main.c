@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/05 15:41:29 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/05 16:08:19 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	ft_nm(t_data *nm_data, char *ptr)
 
 	magic_number = *(int *)ptr;
 	nm_data->ptr = ptr;
-	ft_printf("magic number : %x\n", magic_number);
+	//ft_printf("magic number : %x\n", magic_number);
 	if (magic_number == MH_MAGIC_64)
 	{
 		nm_data->arch = ARCH_64;

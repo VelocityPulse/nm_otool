@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 14:36:34 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/05 14:36:38 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/05 16:07:47 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,15 @@ void			add_nlist64(struct nlist_64 *nl, t_nmlist64 **begin, char *str)
 				manage_doubling(nl, item, begin, str);
 				return ;
 			}
-			else if (cmp < 1)
+			else if (cmp < 0)
 				; // continuing
-			else if (cmp > 1)
+			else if (cmp > 0)
 			{
 				if (item == *begin)
 				{
 					item->back = new_nmlist64(nl, item, NULL, str);
 					*begin = item->back;
+					return ;
 				}
 				insert_before_nmlist64(item, nl, str);
 				return ;
