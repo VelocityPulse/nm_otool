@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 14:36:34 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/05 16:07:47 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/05 17:10:06 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,33 +67,57 @@ void			add_nlist64(struct nlist_64 *nl, t_nmlist64 **begin, char *str)
 	t_nmlist64		*item;
 	int				cmp;
 
-	if (*begin == NULL)
-		*begin = new_nmlist64(nl, NULL, NULL, str);
-	else
+	if (ft_strstr(str, "_select_lenght") != NULL || ft_strstr(str, "_select_lenght_help") != NULL ||ft_strstr(str, "_select_dot") != NULL ||  ft_strstr(str, "_sharp_specify") != NULL || ft_strstr(str, "_select_conversion") != NULL || ft_strstr(str, "_process_spec") != NULL || ft_strstr(str, "_select_flags") != NULL || ft_strstr(str, "_select_field_width") != NULL || ft_strstr(str, "_put_sign") != NULL)
 	{
-		item = *begin;
-		while (item->next)
+		printf("----------NEW ADD : %s\n", str);
+		if (*begin == NULL)
+			*begin = new_nmlist64(nl, NULL, NULL, str);
+		else
 		{
-			if ((cmp = ft_strcmp(item->str, str)) == 0)
+			item = *begin;
+			while (item->next)
 			{
-				manage_doubling(nl, item, begin, str);
-				return ;
+				DEBUG
+				cmp = ft_strcmp(item->str, str);
+				printf("str : [%s] item [%s]  : %d\n", str, item->str, cmp);
+				if ((cmp) == 0)
+				{
+					DEBUG
+					manage_doubling(nl, item, begin, str);
+					return ;
+				}
+				//			else if (cmp < 0)
+				//				; // continuing
+				else if (cmp > 0)
+				{
+					if (item == *begin)
+					{
+						DEBUG
+						item->back = new_nmlist64(nl, item, NULL, str);
+						*begin = item->back;
+						return ;
+					}
+					DEBUG
+					insert_before_nmlist64(item, nl, str);
+					return ;
+				}
+				item = item->next;
 			}
-			else if (cmp < 0)
-				; // continuing
-			else if (cmp > 0)
+			DEBUG
+/*			if ((cmp = ft_strcmp(item->str, str)) < 0)
+			{
+				DEBUG
+*/				item->next = new_nmlist64(nl, NULL, item, str);
+/*			}
+			else
 			{
 				if (item == *begin)
 				{
-					item->back = new_nmlist64(nl, item, NULL, str);
+					item->back = new_nmlist64(nl, item, item->next, str);
 					*begin = item->back;
-					return ;
 				}
-				insert_before_nmlist64(item, nl, str);
-				return ;
+				item->back = new_nmlist64(nl, item, item->next, str);
 			}
-			item = item->next;
-		}
-		item->next = new_nmlist64(nl, NULL, item, str);
+*/		}
 	}
 }
