@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/04 17:10:42 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/05 11:13:11 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_section_name_64(t_data *nm_data, char n_sect)
 	}
 	return (NULL);
 }
-
+// TODO sort by ASCII then, if double, by value
 char	handle_symtab_sect_64(t_data *nm_data, char n_sect)
 {
 	char	*sectname;
