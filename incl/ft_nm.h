@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/05 12:14:05 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/05 13:35:41 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 # define ARCH_32 1
 # define ARCH_64 2
 
+
 typedef struct	s_nmlist64
 {
-	struct nlist64		*ptr;
+	struct nlist_64		*ptr;
 	struct s_nmlist64	*next;
 	struct s_nmlist64	*back;
 	char				*str;
