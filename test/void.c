@@ -6,11 +6,19 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 11:20:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/02 11:21:27 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/06 15:37:23 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+
+static void lol()
+{
+	int i = 19;
+
+	i++;
+	
+}
 
 int main()
 {
@@ -20,5 +28,6 @@ int main()
 
 	while (++i < 10)
 		printf("%d", i);
+	lol();
 	return (0);
 }

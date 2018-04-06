@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 14:05:00 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/06 15:35:07 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_nm(t_data *nm_data, char *ptr)
 	else if (magic_number == MH_MAGIC)
 	{
 //		nm_data->arch = ARCH_32
-//		handle_magic32(nm_data, ptr);
+		handle_magic32(nm_data, ptr);
 	}
 }
 

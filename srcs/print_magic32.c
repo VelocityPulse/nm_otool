@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_magic64.c                                    :+:      :+:    :+:   */
+/*   print_magic32.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/06 13:35:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 14:27:31 by cchameyr         ###   ########.fr       */
+/*   Created: 2018/04/06 14:24:18 by cchameyr          #+#    #+#             */
+/*   Updated: 2018/04/06 15:38:53 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
 
-static char		*browse_section64(struct load_command *lc, t_data *nm_data,
+static char		*browse_section32(struct load_command *lc, t_data *nm_data,
 		int *n_checked, char n_sect)
 {
-	struct segment_command_64	*segm;
-	struct section_64			*sect;
+	struct segment_command	*segm;
+	struct section			*sect;
 	int							j;
 
-	segm = (struct segment_command_64 *)lc;
-	sect = (struct section_64*)(segm + 1);
+	segm = (struct segment_command *)lc;
+	sect = (struct section*)(segm + 1);
 	j = 0;
 	while (j < segm->nsects)
 	{
@@ -34,7 +34,7 @@ static char		*browse_section64(struct load_command *lc, t_data *nm_data,
 	return (NULL);
 }
 
-static char		*browse_segment64(t_data *nm_data, char n_sect)
+static char		*browse_segment(t_data *nm_data, char n_sect)
 {
 	int					i;
 	int					n_checked;
@@ -42,16 +42,16 @@ static char		*browse_segment64(t_data *nm_data, char n_sect)
 	char				*str;
 	struct load_command	*lc;
 
-	ncmds = ((struct mach_header_64 *)nm_data->header)->ncmds;
+	ncmds = ((struct mach_header *)nm_data->header)->ncmds;
 	lc = (struct load_command *)nm_data->first_load_command;
 	i = -1;
 	n_checked = 0;
 	while (++i < ncmds)
 	{
 		trigger_false_pointer(nm_data, (void *)lc);
-		if (lc->cmd == LC_SEGMENT_64)
+		if (lc->cmd == LC_SEGMENT)
 		{
-			if ((str = browse_section64(lc, nm_data, &n_checked, n_sect)) !=
+			if ((str = browse_section32(lc, nm_data, &n_checked, n_sect)) !=
 					NULL)
 				return (str);
 		}
@@ -60,11 +60,11 @@ static char		*browse_segment64(t_data *nm_data, char n_sect)
 	return (NULL);
 }
 
-static char		handle_symtab_sect64(t_data *nm_data, char n_sect)
+static char		handle_symtab_sect32(t_data *nm_data, char n_sect)
 {
 	char    *sectname;
 
-	if ((sectname = browse_segment64(nm_data, n_sect)) == NULL)
+	if ((sectname = browse_segment(nm_data, n_sect)) == NULL)
 	{
 		ft_putstr("ft_nm error : n_sect not found");
 		exit(EXIT_FAILURE);
@@ -78,12 +78,12 @@ static char		handle_symtab_sect64(t_data *nm_data, char n_sect)
 	return 'S';
 }
 
-void			print_output64(t_data *nm_data)
+void			print_output32(t_data *nm_data)
 {
-	t_nmlist64	*list;
+	t_nmlist32	*list;
 	char		type;
 
-	list = nm_data->nlist64_list;
+	list = nm_data->nlist32_list;
 	while (list)
 	{
 		type = list->ptr->n_type & N_TYPE;
@@ -92,15 +92,15 @@ void			print_output64(t_data *nm_data)
 		else if (type == N_ABS)
 			type = 'A';
 		else if (type == N_SECT)
-			type = handle_symtab_sect64(nm_data, list->ptr->n_sect);
+			type = handle_symtab_sect32(nm_data, list->ptr->n_sect);
 		else if (type == N_INDR)
 			type = 'I';
 		if (!(list->ptr->n_type & N_EXT))
 			type += 32;
 		if (type == 'U' || type == 'u')
-			ft_printf("                 %c %s\n", type, list->str);
+			ft_printf("         %c %s\n", type, list->str);
 		else
-			ft_printf("%016llx %c %s\n", list->ptr->n_value, type, list->str);
+			ft_printf("%08llx %c %s\n", list->ptr->n_value, type, list->str);
 		list = list->next;
 	}
 }

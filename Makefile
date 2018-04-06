@@ -6,7 +6,7 @@
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/06 13:34:48 by cchameyr         ###   ########.fr        #
+#    Updated: 2018/04/06 15:36:46 by cchameyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,12 @@ NAME =			ft_nm
 FILES =			main.c \
 				check_security.c \
 				nlist64_list.c \
+				nlist32_list.c \
 				free_list.c \
 				handle_magic64.c \
-				print_magic64.c
+				print_magic64.c \
+				handle_magic32.c \
+				print_magic32.c
 
 SRCS =			$(addprefix srcs/, $(FILES))
 
