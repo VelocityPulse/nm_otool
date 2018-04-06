@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/05 14:43:26 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/06 12:03:24 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef struct	s_data
 }				t_data;
 
 void	trigger_false_pointer(t_data *nm_data, char *ptr);
+
+void	print_output64(t_data *nm_data);
+void	handle_magic64(t_data *nm_data, char *ptr);
 
 void	add_nlist64(struct nlist_64 *nl, t_nmlist64 **begin, char *str);
 
