@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/05 16:08:19 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/06 10:49:25 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ char	handle_symtab_sect_64(t_data *nm_data, char n_sect)
 		return 'D';
 	if (ft_strncmp(sectname, SECT_BSS, ft_strlen(SECT_BSS)) == 0)
 		return 'B';
-	if (ft_strncmp(sectname, SECT_COMMON, ft_strlen(SECT_COMMON)) == 0)
-		return 'C';
+//	if (ft_strncmp(sectname, SECT_COMMON, ft_strlen(SECT_COMMON)) == 0)
+//		return 'C';
 	return ('S');
 }
 
@@ -87,7 +87,9 @@ void	print_output64(t_data *nm_data)
 			;
 		else if (type == N_INDR)
 			type = 'I';
-		if (type == 'U')
+		if (!(list->ptr->n_type & N_EXT))
+			type += 32;
+		if (type == 'U' || type == 'u')
 			ft_printf("                 %c %s\n", type, list->str);
 		else
 			ft_printf("%016llx %c %s\n", list->ptr->n_value, type, list->str);
@@ -145,7 +147,7 @@ void	handle_magic_64(t_data *nm_data, char *ptr)
 			break;
 		}
 		lc = (void *) lc + lc->cmdsize;
-		trigger_false_pointer(nm_data, (void *)lc);
+	trigger_false_pointer(nm_data, (void *)lc);
 	}
 	print_output64(nm_data);
 }
