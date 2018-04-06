@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 13:39:15 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/06 17:35:17 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 
 //# define ARCH_32 1
 //# define ARCH_64 2
+
+# define MAGIC 0
+# define CIGAM 1
 
 typedef struct	s_nmlist64
 {
@@ -45,7 +48,7 @@ typedef struct	s_data
 {
 	char			*ptr;
 	int				ptr_offset;
-//	char			arch;
+	char			endian:1;
 	void			*header;
 	void			*first_load_command;
 	t_nmlist64		*nlist64_list;

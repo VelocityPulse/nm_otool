@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 16:51:24 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/06 18:19:38 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,53 @@ void	ft_nm(t_data *nm_data, char *ptr)
 
 	magic_number = *(int *)ptr;
 	nm_data->ptr = ptr;
-	//ft_printf("magic number : %x\n", magic_number);
+	nm_data->endian = MAGIC;
+	printf("%x\n", magic_number);
 	if (magic_number == MH_MAGIC_64)
-	{
-//		nm_data->arch = ARCH_64;
-		handle_magic64(nm_data, ptr);
-	}
+		return ((void)handle_magic64(nm_data, ptr));
 	else if (magic_number == MH_MAGIC)
-	{
-//		nm_data->arch = ARCH_32
-		handle_magic32(nm_data, ptr);
-	}
+		return ((void)handle_magic32(nm_data, ptr));
+	nm_data->endian = CIGAM;
+	if (magic_number == MH_CIGAM_64)
+		return ((void)handle_magic32(nm_data, ptr));
+	else if (magic_number == MH_CIGAM)
+		return ((void)handle_magic32(nm_data, ptr));
 }
+
+/*
+ * TODO
+ * faire le little-endian avec le ppc-only qui est juste un macho-o tiré de 
+ * audiodevice.
+ *
+ * les fat contiennent juste plusieurs macho-o simple
+ *
+ * fat header : pour dire que c'est un fat 
+ * fat arch : pour dire combien il y a de mach-o
+ * Structure Universal Binaries (Fat files):
+ -----------------------------------
+ |   - Fat Header                  |
+ |   - Fat Arch                    |
+ -----------------------------------
+ -----------------------------------
+ |   - Mach-O Header               |
+ |                                 |
+ ----------------------------------
+ *
+ * les archies : .a et .so se parsent de la meme maniere
+ * regroupe tout pleins de mach-o
+ *
+ *
+ * Structure Archive (build with ar, example with an archive composed of 4 object file):
+ ----------------------------------
+ |   - char [8]magic -> "!<arch>\n"|
+ -----------------------------------
+ -----------------------------------
+ |   - struct ar_hdr               |
+ |   - Mach-O                      |
+ -----------------------------------
+ *
+ *
+*/
 
 int		main(int argc, char **argv)
 {
