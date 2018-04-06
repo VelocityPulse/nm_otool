@@ -6,11 +6,17 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 12:06:14 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/06 14:05:00 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
+
+void	free_nm_data(t_data *nm_data)
+{
+	free_nlist64(&nm_data->nlist64_list);
+	free_nlist32(&nm_data->nlist32_list);
+}
 
 void	ft_nm(t_data *nm_data, char *ptr)
 {
@@ -21,13 +27,13 @@ void	ft_nm(t_data *nm_data, char *ptr)
 	//ft_printf("magic number : %x\n", magic_number);
 	if (magic_number == MH_MAGIC_64)
 	{
-		nm_data->arch = ARCH_64;
+//		nm_data->arch = ARCH_64;
 		handle_magic64(nm_data, ptr);
 	}
 	else if (magic_number == MH_MAGIC)
 	{
-		nm_data->arch = ARCH_32
-			; // TODO here
+//		nm_data->arch = ARCH_32
+//		handle_magic32(nm_data, ptr);
 	}
 }
 
@@ -60,11 +66,12 @@ int		main(int argc, char **argv)
 	}
 	nm_data.ptr_offset = buff.st_size;
 	nm_data.nlist64_list = NULL;
-	nm_data.nlist_list = NULL;
+	nm_data.nlist32_list = NULL;
 	ft_nm(&nm_data, ptr);
 	if (munmap(ptr, buff.st_size) < 0)
 	{
 		ft_printf("munmap error\n");
 		return (EXIT_FAILURE);
 	}
+	free_nm_data(&nm_data);
 }
