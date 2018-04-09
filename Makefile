@@ -6,7 +6,7 @@
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/06 15:36:46 by cchameyr         ###   ########.fr        #
+#    Updated: 2018/04/09 13:01:00 by cchameyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ FILES =			main.c \
 				handle_magic64.c \
 				print_magic64.c \
 				handle_magic32.c \
-				print_magic32.c
+				print_magic32.c \
+				handle_fat.c
 
 SRCS =			$(addprefix srcs/, $(FILES))
 
@@ -67,3 +68,4 @@ re: fclean all
 r: objs_rm
 	$(RM) $(NAME)
 	@make
+	./ft_nm test/fatbin

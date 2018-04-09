@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:41:49 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 10:52:39 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 15:47:06 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	trigger_false_pointer(t_data *nm_data, char *ptr)
 {
 	if (ptr < nm_data->ptr || ptr > nm_data->ptr + nm_data->ptr_offset)
 	{
-		if (munmap(nm_data->ptr, nm_data->ptr_offset) < 0)
+		if (nm_data->mapped == MAPPED &&
+				munmap(nm_data->ptr, nm_data->ptr_offset) < 0)
 		{
 			ft_putstr("munmap error\n");
 			exit(EXIT_FAILURE);

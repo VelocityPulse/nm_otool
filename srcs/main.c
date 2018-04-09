@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 10:35:34 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:05:08 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,22 @@ void	ft_nm(t_data *nm_data, char *ptr)
 	magic_number = *(int *)ptr;
 	nm_data->ptr = ptr;
 	nm_data->endian = MAGIC;
+	if (magic_number == FAT_MAGIC_64)
+		;
+	if (magic_number == FAT_MAGIC)
+		;
 	if (magic_number == MH_MAGIC_64)
 		return ((void)handle_magic64(nm_data, ptr));
-	else if (magic_number == MH_MAGIC)
+	if (magic_number == MH_MAGIC)
 		return ((void)handle_magic32(nm_data, ptr));
 	nm_data->endian = CIGAM;
+	if (magic_number == FAT_CIGAM_64)
+		;
+	if (magic_number == FAT_CIGAM)
+		return ((void)handle_fat32(nm_data, ptr));
 	if (magic_number == MH_CIGAM_64)
 		return ((void)handle_magic64(nm_data, ptr));
-	else if (magic_number == MH_CIGAM)
+	if (magic_number == MH_CIGAM)
 		return ((void)handle_magic32(nm_data, ptr));
 }
 

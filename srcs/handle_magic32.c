@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:42:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 10:18:15 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 11:39:15 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	handle_magic32(t_data *nm_data, char *ptr)
 {
 	int						ncmds;
 	int						i;
-	struct mach_header	*header;
+	struct mach_header		*header;
 	struct load_command		*lc;
 	struct symtab_command	*sym;
 
