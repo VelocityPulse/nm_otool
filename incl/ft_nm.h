@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 15:46:38 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 16:08:28 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void				add_nlist32(struct nlist *nl, t_nmlist32 **begin,
 void				free_nlist32(t_nmlist32 **begin);
 unsigned int		nm_bsp32(t_data *nm_data, unsigned int value);
 
+void				handle_fat64(t_data *nm_data, char *ptr);
 void				handle_fat32(t_data *nm_data, char *ptr);
 
 #endif
