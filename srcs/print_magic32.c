@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 14:24:18 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 15:38:53 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 10:24:29 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char		*browse_section32(struct load_command *lc, t_data *nm_data,
 	segm = (struct segment_command *)lc;
 	sect = (struct section*)(segm + 1);
 	j = 0;
-	while (j < segm->nsects)
+	while (j < nm_bsp32(nm_data, segm->nsects))
 	{
 		trigger_false_pointer(nm_data, (void *)sect);
 		(*n_checked)++;
@@ -34,7 +34,7 @@ static char		*browse_section32(struct load_command *lc, t_data *nm_data,
 	return (NULL);
 }
 
-static char		*browse_segment(t_data *nm_data, char n_sect)
+static char		*browse_segment32(t_data *nm_data, char n_sect)
 {
 	int					i;
 	int					n_checked;
@@ -42,20 +42,20 @@ static char		*browse_segment(t_data *nm_data, char n_sect)
 	char				*str;
 	struct load_command	*lc;
 
-	ncmds = ((struct mach_header *)nm_data->header)->ncmds;
+	ncmds = nm_bsp32(nm_data, ((struct mach_header *)nm_data->header)->ncmds);
 	lc = (struct load_command *)nm_data->first_load_command;
 	i = -1;
 	n_checked = 0;
 	while (++i < ncmds)
 	{
 		trigger_false_pointer(nm_data, (void *)lc);
-		if (lc->cmd == LC_SEGMENT)
+		if (nm_bsp32(nm_data, lc->cmd) == LC_SEGMENT)
 		{
 			if ((str = browse_section32(lc, nm_data, &n_checked, n_sect)) !=
 					NULL)
 				return (str);
 		}
-		lc = (void *)lc + lc->cmdsize;
+		lc = (void *)lc + nm_bsp32(nm_data, lc->cmdsize);
 	}
 	return (NULL);
 }
@@ -64,7 +64,7 @@ static char		handle_symtab_sect32(t_data *nm_data, char n_sect)
 {
 	char    *sectname;
 
-	if ((sectname = browse_segment(nm_data, n_sect)) == NULL)
+	if ((sectname = browse_segment32(nm_data, n_sect)) == NULL)
 	{
 		ft_putstr("ft_nm error : n_sect not found");
 		exit(EXIT_FAILURE);
@@ -100,7 +100,8 @@ void			print_output32(t_data *nm_data)
 		if (type == 'U' || type == 'u')
 			ft_printf("         %c %s\n", type, list->str);
 		else
-			ft_printf("%08llx %c %s\n", list->ptr->n_value, type, list->str);
+			ft_printf("%08llx %c %s\n", nm_bsp32(nm_data, list->ptr->n_value),
+					type, list->str);
 		list = list->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 17:35:17 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 10:13:07 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,24 @@ typedef struct	s_data
 {
 	char			*ptr;
 	int				ptr_offset;
-	char			endian:1;
+	char			endian:2;
 	void			*header;
 	void			*first_load_command;
 	t_nmlist64		*nlist64_list;
 	t_nmlist32		*nlist32_list;
 }				t_data;
 
-void	trigger_false_pointer(t_data *nm_data, char *ptr);
+void			trigger_false_pointer(t_data *nm_data, char *ptr);
 
-void	handle_magic64(t_data *nm_data, char *ptr);
-void	print_output64(t_data *nm_data);
-void	add_nlist64(struct nlist_64 *nl, t_nmlist64 **begin, char *str);
-void	free_nlist64(t_nmlist64 **begin);
+void			handle_magic64(t_data *nm_data, char *ptr);
+void			print_output64(t_data *nm_data);
+void			add_nlist64(struct nlist_64 *nl, t_nmlist64 **begin, char *str);
+void			free_nlist64(t_nmlist64 **begin);
 
-void	handle_magic32(t_data *nm_data, char *ptr);
-void	print_output32(t_data *nm_data);
-void	add_nlist32(struct nlist *nl, t_nmlist32 **begin, char *str);
-void	free_nlist32(t_nmlist32 **begin);
+void			handle_magic32(t_data *nm_data, char *ptr);
+void			print_output32(t_data *nm_data);
+void			add_nlist32(struct nlist *nl, t_nmlist32 **begin, char *str);
+void			free_nlist32(t_nmlist32 **begin);
+unsigned int	nm_bsp32(t_data *nm_data, unsigned int value);
 
 #endif
