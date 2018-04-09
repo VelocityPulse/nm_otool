@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/06 14:27:31 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 10:33:34 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char		*browse_section64(struct load_command *lc, t_data *nm_data,
 	segm = (struct segment_command_64 *)lc;
 	sect = (struct section_64*)(segm + 1);
 	j = 0;
-	while (j < segm->nsects)
+	while (j < nm_bsp64(nm_data, segm->nsects))
 	{
 		trigger_false_pointer(nm_data, (void *)sect);
 		(*n_checked)++;
@@ -42,20 +42,21 @@ static char		*browse_segment64(t_data *nm_data, char n_sect)
 	char				*str;
 	struct load_command	*lc;
 
-	ncmds = ((struct mach_header_64 *)nm_data->header)->ncmds;
+	ncmds = nm_bsp64(nm_data, ((struct mach_header_64 *)nm_data->header)
+			->ncmds);
 	lc = (struct load_command *)nm_data->first_load_command;
 	i = -1;
 	n_checked = 0;
 	while (++i < ncmds)
 	{
 		trigger_false_pointer(nm_data, (void *)lc);
-		if (lc->cmd == LC_SEGMENT_64)
+		if (nm_bsp64(nm_data, lc->cmd) == LC_SEGMENT_64)
 		{
 			if ((str = browse_section64(lc, nm_data, &n_checked, n_sect)) !=
 					NULL)
 				return (str);
 		}
-		lc = (void *)lc + lc->cmdsize;
+		lc = (void *)lc + nm_bsp64(nm_data, lc->cmdsize);
 	}
 	return (NULL);
 }
@@ -100,7 +101,8 @@ void			print_output64(t_data *nm_data)
 		if (type == 'U' || type == 'u')
 			ft_printf("                 %c %s\n", type, list->str);
 		else
-			ft_printf("%016llx %c %s\n", list->ptr->n_value, type, list->str);
+			ft_printf("%016llx %c %s\n", nm_bsp64(nm_data, list->ptr->n_value),
+					type, list->str);
 		list = list->next;
 	}
 }

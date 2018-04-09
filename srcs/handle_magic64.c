@@ -6,11 +6,18 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 09:55:31 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/09 10:36:01 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
+
+unsigned long int	nm_bsp64(t_data *nm_data, unsigned long int value)
+{
+	if (nm_data->endian == CIGAM)
+		return (ft_bswap64(value));
+	return (value);
+}
 
 static void		browse_nlists64(t_data *nm_data, int nsyms, int symoff,
 		int stroff)
@@ -21,8 +28,9 @@ static void		browse_nlists64(t_data *nm_data, int nsyms, int symoff,
 	struct nlist_64		*array;
 
 	ptr = nm_data->ptr;
-	array = (void *)ptr + symoff;
-	stringtable = (void *)ptr + stroff;
+	array = (void *)ptr + nm_bsp64(nm_data, symoff);
+	stringtable = (void *)ptr + nm_bsp64(nm_data, stroff);
+	nsyms = nm_bsp64(nm_data, nsyms);
 	trigger_false_pointer(nm_data, (void *)array);
 	trigger_false_pointer(nm_data, (stringtable));
 	i = -1;
@@ -30,12 +38,12 @@ static void		browse_nlists64(t_data *nm_data, int nsyms, int symoff,
 	{
 		trigger_false_pointer(nm_data, (void *)&array[i]);
 		trigger_false_pointer(nm_data, (void *)stringtable +
-				array[i].n_un.n_strx);
+				nm_bsp64(nm_data, array[i].n_un.n_strx));
 		char type = array[i].n_type & N_TYPE;
 		if ((array[i].n_type & N_STAB) == 0)
 		{
 			add_nlist64(&array[i], &nm_data->nlist64_list,
-					stringtable + array[i].n_un.n_strx);
+					stringtable + nm_bsp64(nm_data, array[i].n_un.n_strx));
 		}
 	}
 }
@@ -53,17 +61,17 @@ void	handle_magic64(t_data *nm_data, char *ptr)
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	trigger_false_pointer(nm_data, (void *)lc);
 	nm_data->first_load_command = lc;
-	ncmds = header->ncmds;
+	ncmds = nm_bsp64(nm_data, header->ncmds);
 	i = -1;
 	while (++i < ncmds)
 	{
-		if (lc->cmd == LC_SYMTAB)
+		if (nm_bsp64(nm_data, lc->cmd) == LC_SYMTAB)
 		{
 			sym = (struct symtab_command*)lc;
 			browse_nlists64(nm_data, sym->nsyms, sym->symoff, sym->stroff);
 			break;
 		}
-		lc = (void *) lc + lc->cmdsize;
+		lc = (void *) lc + nm_bsp64(nm_data, lc->cmdsize);
 	trigger_false_pointer(nm_data, (void *)lc);
 	}
 	print_output64(nm_data);
