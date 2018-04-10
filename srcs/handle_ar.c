@@ -6,12 +6,13 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 11:08:05 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/10 16:36:52 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/10 16:40:59 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
 
+// TODO ADD THE TRIGGER
 
 void	handle_ar(t_data *nm_data, char *ptr)
 {
