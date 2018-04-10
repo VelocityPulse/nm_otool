@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 15:59:32 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/10 16:31:53 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	handle_magic64(t_data *nm_data, char *ptr)
 			break;
 		}
 		lc = (void *) lc + nm_bsp64(nm_data, lc->cmdsize);
-	trigger_false_pointer(nm_data, (void *)lc);
+		trigger_false_pointer(nm_data, (void *)lc);
 	}
 	print_output64(nm_data);
 }

@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 16:08:28 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/10 16:35:57 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 # include "../libft/libft.h"
 # include <fcntl.h>
 # include <stdlib.h>
-# include <sys/mman.h>
-# include <sys/stat.h>
+# include <ar.h>
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
+# include <mach-o/ranlib.h>
+# include <sys/mman.h>
+# include <sys/stat.h>
 
 # include "../../Perso/debug.h"
 
@@ -51,6 +53,8 @@ typedef struct	s_data
 	int				ptr_offset;
 	char			endian:2;
 	char			mapped:2;
+	char			*file_name;
+	char			*obj_name;
 	void			*header;
 	void			*first_load_command;
 	t_nmlist64		*nlist64_list;
@@ -58,6 +62,7 @@ typedef struct	s_data
 }				t_data;
 
 void				ft_nm(t_data *nm_data, char *ptr);
+void				free_nm_data(t_data *nm_data);
 
 void				trigger_false_pointer(t_data *nm_data, char *ptr);
 
@@ -77,5 +82,7 @@ unsigned int		nm_bsp32(t_data *nm_data, unsigned int value);
 
 void				handle_fat64(t_data *nm_data, char *ptr);
 void				handle_fat32(t_data *nm_data, char *ptr);
+
+void				handle_ar(t_data *nm_data, char *ptr);
 
 #endif
