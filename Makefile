@@ -6,7 +6,7 @@
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/11 12:05:24 by cchameyr         ###   ########.fr        #
+#    Updated: 2018/04/11 13:22:27 by cchameyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,4 +69,4 @@ re: fclean all
 r: objs_rm
 	$(RM) $(NAME)
 	@make
-	./ft_nm test/fatbin
+	./ft_nm libft/libft.a

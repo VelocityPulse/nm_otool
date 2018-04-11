@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 12:14:10 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 13:32:31 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		browse_nlists64(t_data *nm_data, int nsyms, int symoff,
 	stringtable = (void *)ptr + nm_bsp64(nm_data, stroff);
 	nsyms = nm_bsp64(nm_data, nsyms);
 	trigger_false_pointer(nm_data, (void *)array);
-	trigger_false_pointer(nm_data, (stringtable));
+	trigger_false_pointer(nm_data, stringtable);
 	i = -1;
 	while (++i < nsyms)
 	{
@@ -41,10 +41,8 @@ static void		browse_nlists64(t_data *nm_data, int nsyms, int symoff,
 				nm_bsp64(nm_data, array[i].n_un.n_strx));
 		char type = array[i].n_type & N_TYPE;
 		if ((array[i].n_type & N_STAB) == 0)
-		{
 			add_nlist64(&array[i], &nm_data->nlist64_list,
 					stringtable + nm_bsp64(nm_data, array[i].n_un.n_strx));
-		}
 	}
 }
 
