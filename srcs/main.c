@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 15:34:23 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:40:21 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,17 @@ void	handle_file(char *path, int n_file)
 	t_data			nm_data;
 
 	if ((fd = open(path, O_RDONLY)) < 0)
-		return ((void)ft_printf("error on open : %s\n", path));
+		return ((void)ft_printf("\nERROR in file [%s] : open fail\n", path));
 	if (fstat(fd, &buff) < 0)
-		return ((void)ft_printf("error on stat : %s\n", path));
+		return ((void)ft_printf("\nERROR in file [%s] : stat fail\n", path));
 	if ((ptr = mmap(0, buff.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) ==
 			MAP_FAILED)
-		return ((void)ft_printf("mmap error : %s\n", path));
+		return ((void)ft_printf("\nERROR in file [%s] : mmap fail\n", path));
 	init_nm_data(&nm_data, buff.st_size, path, n_file);
 	ft_nm(&nm_data, ptr);
 	free_nm_data(&nm_data);
 	if (munmap(ptr, buff.st_size) < 0)
-		return ((void)ft_printf("munmap error\n"));
+		return ((void)ft_printf("\nERROR in file [%s] : unmmap fail\n", path));
 
 }
 

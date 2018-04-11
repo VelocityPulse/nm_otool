@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:41:49 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 15:47:06 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:39:49 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void	trigger_false_pointer(t_data *nm_data, char *ptr)
 		if (nm_data->mapped == MAPPED &&
 				munmap(nm_data->ptr, nm_data->ptr_offset) < 0)
 		{
-			ft_putstr("munmap error\n");
+			ft_printf("\nERROR in file [%s] : munmap fail\n",
+					nm_data->file_name);
 			exit(EXIT_FAILURE);
 		}
-		ft_putstr("ft_nm error : bad pointer position\n");
+		ft_printf("\nERROR in file [%s] : bad pointer position\n",
+				nm_data->file_name);
 		exit(EXIT_FAILURE);
 	}
 }
