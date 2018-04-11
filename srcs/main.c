@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/10 16:34:22 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 11:37:22 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	ft_nm(t_data *nm_data, char *ptr)
 		return ((void)handle_magic64(nm_data, ptr));
 	if (magic_number == MH_CIGAM)
 		return ((void)handle_magic32(nm_data, ptr));
-	free_nm_data(nm_data);
 }
 
 /*
@@ -112,6 +111,7 @@ int		main(int argc, char **argv)
 	nm_data.nlist32_list = NULL;
 	nm_data.file_name = argv[1];
 	nm_data.obj_name = NULL;
+	nm_data.n_file = 1;
 	ft_nm(&nm_data, ptr);
 	if (munmap(ptr, buff.st_size) < 0)
 	{

@@ -6,7 +6,7 @@
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/10 11:08:27 by cchameyr         ###   ########.fr        #
+#    Updated: 2018/04/11 12:05:24 by cchameyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ OBJS =			$(addprefix objs/, $(FILES:.c=.o))
 
 DEBUG = 		-g -fsanitize=address
 
-FLAGS =			$(DEBUG)#-Wall -Werror -Wextra $(DEBUG) TODO UNCOMMENT HERE
+FLAGS =			#$(DEBUG)#-Wall -Werror -Wextra $(DEBUG) TODO UNCOMMENT HERE
 
 RM =			rm -rf
 

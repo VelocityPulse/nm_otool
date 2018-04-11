@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/09 10:33:34 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 12:17:38 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,21 @@ static char		handle_symtab_sect64(t_data *nm_data, char n_sect)
 	return 'S';
 }
 
+static void		print_title64(t_data *nm_data)
+{
+	if (nm_data->obj_name != NULL)
+		ft_printf("\n%s(%s):\n", nm_data->file_name, nm_data->obj_name);
+	else if (nm_data->n_file > 1)
+		ft_printf("\n%s:\n", nm_data->file_name);
+}
+
 void			print_output64(t_data *nm_data)
 {
 	t_nmlist64	*list;
 	char		type;
 
 	list = nm_data->nlist64_list;
+	print_title64(nm_data);
 	while (list)
 	{
 		type = list->ptr->n_type & N_TYPE;
