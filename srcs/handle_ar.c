@@ -6,20 +6,21 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 11:08:05 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 14:59:05 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:58:41 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
 
-static void		handle_ar_obj(t_data *nm_data, void *ptr, int ptr_offset,
+static int		handle_ar_obj(t_data *nm_data, void *ptr, int ptr_offset,
 		char *obj_name)
 {
 	t_data		sub_nm_data;
 
-	trigger_false_pointer(nm_data, ptr);
-	trigger_false_pointer(nm_data, ptr + ptr_offset);
-	trigger_false_pointer(nm_data, obj_name);
+	if (!trigger_false_pointer(nm_data, ptr) ||
+			!trigger_false_pointer(nm_data, ptr + ptr_offset)
+			|| !trigger_false_pointer(nm_data, obj_name))
+				return (_ERROR_);
 	sub_nm_data.ptr = ptr;
 	sub_nm_data.ptr_offset = ptr_offset;
 	sub_nm_data.file_name = nm_data->file_name;
@@ -32,9 +33,10 @@ static void		handle_ar_obj(t_data *nm_data, void *ptr, int ptr_offset,
 		ft_nm(&sub_nm_data, sub_nm_data.ptr);
 		free_nm_data(&sub_nm_data);
 	}
+	return (_SUCCESS_);
 }
 
-void			handle_ar(t_data *nm_data, char *ptr)
+int				handle_ar(t_data *nm_data, char *ptr)
 {
 	struct ar_hdr	*ar;
 	char			*obj_name;
@@ -57,8 +59,10 @@ void			handle_ar(t_data *nm_data, char *ptr)
 		else
 			obj_name = ar->ar_name;
 		jump += sizeof(struct ar_hdr);
-		handle_ar_obj(nm_data, ptr + jump,
-				ft_atoi(ar->ar_size) - padding_offset, obj_name);
+		if (!handle_ar_obj(nm_data, ptr + jump,
+				ft_atoi(ar->ar_size) - padding_offset, obj_name))
+			return (_ERROR_);
 		ptr += ft_atoi(ar->ar_size) + sizeof(struct ar_hdr);
 	}
+	return (_SUCCESS_);
 }

@@ -6,19 +6,19 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 15:40:21 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:55:13 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
 
-void	free_nm_data(t_data *nm_data)
+void				free_nm_data(t_data *nm_data)
 {
 	free_nlist64(&nm_data->nlist64_list);
 	free_nlist32(&nm_data->nlist32_list);
 }
 
-void	ft_nm(t_data *nm_data, char *ptr)
+void				ft_nm(t_data *nm_data, char *ptr)
 {
 	int		magic_number;
 
@@ -78,7 +78,7 @@ void	ft_nm(t_data *nm_data, char *ptr)
 ** -----------------------------------
 */
 
-void	init_nm_data(t_data *nm_data, int offset, char *file_name,
+static void			init_nm_data(t_data *nm_data, int offset, char *file_name,
 		int n_file)
 {
 	nm_data->ptr_offset = offset;
@@ -89,7 +89,7 @@ void	init_nm_data(t_data *nm_data, int offset, char *file_name,
 	nm_data->n_file = n_file;
 }
 
-void	handle_file(char *path, int n_file)
+static void			handle_file(char *path, int n_file)
 {
 	void			*ptr;
 	int				fd;
@@ -111,7 +111,7 @@ void	handle_file(char *path, int n_file)
 
 }
 
-int		main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
 	int				fd;
 	int				i;

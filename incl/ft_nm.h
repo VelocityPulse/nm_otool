@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 11:31:01 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 16:05:09 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct	s_data
 void				ft_nm(t_data *nm_data, char *ptr);
 void				free_nm_data(t_data *nm_data);
 
-void				trigger_false_pointer(t_data *nm_data, char *ptr);
+int					trigger_false_pointer(t_data *nm_data, char *ptr);
 
 void				handle_magic64(t_data *nm_data, char *ptr);
 void				print_output64(t_data *nm_data);
@@ -81,9 +81,9 @@ void				add_nlist32(struct nlist *nl, t_nmlist32 **begin,
 void				free_nlist32(t_nmlist32 **begin);
 unsigned int		nm_bsp32(t_data *nm_data, unsigned int value);
 
-void				handle_fat64(t_data *nm_data, char *ptr);
-void				handle_fat32(t_data *nm_data, char *ptr);
+int					handle_fat64(t_data *nm_data, char *ptr);
+int					handle_fat32(t_data *nm_data, char *ptr);
 
-void				handle_ar(t_data *nm_data, char *ptr);
+int					handle_ar(t_data *nm_data, char *ptr);
 
 #endif
