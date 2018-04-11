@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 11:37:22 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:34:23 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,45 +78,51 @@ void	ft_nm(t_data *nm_data, char *ptr)
 ** -----------------------------------
 */
 
-int		main(int argc, char **argv)
+void	init_nm_data(t_data *nm_data, int offset, char *file_name,
+		int n_file)
 {
+	nm_data->ptr_offset = offset;
+	nm_data->nlist64_list = NULL;
+	nm_data->nlist32_list = NULL;
+	nm_data->file_name = file_name;
+	nm_data->obj_name = NULL;
+	nm_data->n_file = n_file;
+}
+
+void	handle_file(char *path, int n_file)
+{
+	void			*ptr;
 	int				fd;
-	char			*ptr;
 	struct stat		buff;
 	t_data			nm_data;
 
-	if (argc != 2)
+	if ((fd = open(path, O_RDONLY)) < 0)
+		return ((void)ft_printf("error on open : %s\n", path));
+	if (fstat(fd, &buff) < 0)
+		return ((void)ft_printf("error on stat : %s\n", path));
+	if ((ptr = mmap(0, buff.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) ==
+			MAP_FAILED)
+		return ((void)ft_printf("mmap error : %s\n", path));
+	init_nm_data(&nm_data, buff.st_size, path, n_file);
+	ft_nm(&nm_data, ptr);
+	free_nm_data(&nm_data);
+	if (munmap(ptr, buff.st_size) < 0)
+		return ((void)ft_printf("munmap error\n"));
+
+}
+
+int		main(int argc, char **argv)
+{
+	int				fd;
+	int				i;
+
+	if (argc < 2)
 	{
 		ft_printf("put an argument\n");
 		return (EXIT_FAILURE);
 	}
-	if ((fd = open(argv[1], O_RDONLY)) < 0)
-	{
-		ft_printf("error on open\n");
-		return (EXIT_FAILURE);
-	}
-	if (fstat(fd, &buff) < 0)
-	{
-		ft_printf("error on stat\n");
-		return (EXIT_FAILURE);
-	}
-	if ((ptr = mmap(0, buff.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) ==
-			MAP_FAILED)
-	{
-		ft_printf("mmap error\n");
-		return (EXIT_FAILURE);
-	}
-	nm_data.ptr_offset = buff.st_size;
-	nm_data.nlist64_list = NULL;
-	nm_data.nlist32_list = NULL;
-	nm_data.file_name = argv[1];
-	nm_data.obj_name = NULL;
-	nm_data.n_file = 1;
-	ft_nm(&nm_data, ptr);
-	if (munmap(ptr, buff.st_size) < 0)
-	{
-		ft_printf("munmap error\n");
-		return (EXIT_FAILURE);
-	}
-	free_nm_data(&nm_data);
+	i = 0;
+	while (++i < argc)
+		handle_file(argv[i], argc - 1);
+
 }
