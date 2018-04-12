@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 10:37:55 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 11:33:28 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void				free_nm_data(t_data *nm_data);
 
 int					trigger_false_pointer(t_data *nm_data, char *ptr);
 
-void				handle_magic64(t_data *nm_data, char *ptr);
-void				print_output64(t_data *nm_data);
+int					handle_magic64(t_data *nm_data, char *ptr);
+int					print_output64(t_data *nm_data);
 void				add_nlist64(struct nlist_64 *nl, t_nmlist64 **begin,
 		char *str);
 void				free_nlist64(t_nmlist64 **begin);
