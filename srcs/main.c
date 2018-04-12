@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 15:55:13 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 12:17:29 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void				ft_nm(t_data *nm_data, char *ptr)
 		return ((void)handle_magic64(nm_data, ptr));
 	if (magic_number == MH_CIGAM)
 		return ((void)handle_magic32(nm_data, ptr));
+	ft_printf("\nERROR in file [%s] : File not receognized\n",
+			nm_data->file_name);
 }
 
 /*

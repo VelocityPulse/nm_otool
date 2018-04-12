@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 11:36:52 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 10:07:30 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 12:10:00 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static int		init_sub_nm_data(t_data *nm_data, t_data *sub_nm_data,
 		return (_ERROR_);
 	sub_nm_data->nlist64_list = NULL;
 	sub_nm_data->nlist32_list = NULL;
+	sub_nm_data->n_file = nm_data->n_file;
+	sub_nm_data->file_name = nm_data->file_name;
+	sub_nm_data->obj_name = NULL;
 	sub_nm_data->ptr = ptr;
 	if (offset != 0)
 		sub_nm_data->ptr_offset = offset;
