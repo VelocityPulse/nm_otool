@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 11:33:28 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 14:50:52 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct	s_data
 	int				ptr_offset;
 	char			endian:2;
 	char			mapped:2;
+	int				is_fat;
+	char			*arch_name;
 	int				n_file;
 	char			*file_name;
 	char			*obj_name;

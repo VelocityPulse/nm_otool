@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 14:24:18 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 12:28:08 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 14:26:46 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int				print_output32(t_data *nm_data)
 	list = nm_data->nlist32_list;
 	if (nm_data->obj_name != NULL)
 		ft_printf("\n%s(%s):\n", nm_data->file_name, nm_data->obj_name);
-	else if (nm_data->n_file > 1)
+	else if (nm_data->n_file > 1 || nm_data->is_fat == TRUE)
 		ft_printf("\n%s:\n", nm_data->file_name);
 	while (list)
 	{
