@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 14:24:18 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 11:30:26 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 12:28:08 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char		*browse_section32(struct load_command *lc, t_data *nm_data,
 	segm = (struct segment_command *)lc;
 	sect = (struct section*)(segm + 1);
 	j = 0;
-	while (j < nm_bsp32(nm_data, segm->nsects))
+	while (j < (int)nm_bsp32(nm_data, segm->nsects))
 	{
 		if (!trigger_false_pointer(nm_data, (void *)sect))
 			return ((void *)-1);
@@ -114,7 +114,6 @@ static int		help_print(t_data *nm_data, t_nmlist32 *list)
 int				print_output32(t_data *nm_data)
 {
 	t_nmlist32	*list;
-	char		type;
 
 	list = nm_data->nlist32_list;
 	if (nm_data->obj_name != NULL)

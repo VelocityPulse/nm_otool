@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 12:00:51 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 12:25:27 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ static int			check_nlist64(t_data *nm_data, struct nlist_64 *array,
 {
 	if (!trigger_false_pointer(nm_data, (void *)&array[i]) ||
 			!trigger_false_pointer(nm_data, (void *)stringtable +
-				nm_bsp64(nm_data, array[i].n_un.n_strx)))
+				(int)nm_bsp64(nm_data, array[i].n_un.n_strx)))
 		return (_ERROR_);
-	char type = array[i].n_type & N_TYPE;
 	if ((array[i].n_type & N_STAB) == 0)
 		add_nlist64(&array[i], &nm_data->nlist64_list,
 				stringtable + nm_bsp64(nm_data, array[i].n_un.n_strx));
@@ -61,7 +60,7 @@ static int			browse_nlists64(t_data *nm_data, int nsyms, int symoff,
 int				handle_magic64(t_data *nm_data, char *ptr)
 {
 	int						i;
-	struct mach_header_64		*header;
+	struct mach_header_64	*header;
 	struct load_command		*lc;
 	struct symtab_command	*sym;
 
@@ -71,7 +70,7 @@ int				handle_magic64(t_data *nm_data, char *ptr)
 	if ((i = -1) && !trigger_false_pointer(nm_data, (void *)lc))
 		return (_ERROR_);
 	nm_data->first_load_command = lc;
-	while (++i < nm_bsp64(nm_data, header->ncmds))
+	while (++i < (int)nm_bsp64(nm_data, header->ncmds))
 	{
 		if (nm_bsp64(nm_data, lc->cmd) == LC_SYMTAB)
 		{

@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:42:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 11:38:31 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 12:27:45 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static int		check_nlists32(t_data *nm_data, struct nlist *array,
 			!trigger_false_pointer(nm_data, (void *)stringtable +
 				nm_bsp32(nm_data, array[i].n_un.n_strx)))
 		return (_ERROR_);
-	char type = array[i].n_type & N_TYPE;
 	if ((array[i].n_type & N_STAB) == 0)
 		add_nlist32(&array[i], &nm_data->nlist32_list,
 				stringtable + nm_bsp32(nm_data, array[i].n_un.n_strx));
@@ -70,7 +69,7 @@ int				handle_magic32(t_data *nm_data, char *ptr)
 	if ((i = -1) && !trigger_false_pointer(nm_data, (void *)lc))
 		return (_ERROR_);
 	nm_data->first_load_command = lc;
-	while (++i < nm_bsp32(nm_data, header->ncmds))
+	while (++i < (int)nm_bsp32(nm_data, header->ncmds))
 	{
 		if (nm_bsp32(nm_data, lc->cmd) == LC_SYMTAB)
 		{

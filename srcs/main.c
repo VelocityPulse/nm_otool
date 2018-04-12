@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 12:17:29 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 12:22:54 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void				free_nm_data(t_data *nm_data)
 
 void				ft_nm(t_data *nm_data, char *ptr)
 {
-	int		magic_number;
+	unsigned int	magic_number;
 
-	magic_number = *(int *)ptr;
+	magic_number = *(unsigned int *)ptr;
 	nm_data->ptr = ptr;
 	nm_data->endian = MAGIC;
 	if (magic_number == FAT_MAGIC_64)
@@ -115,7 +115,6 @@ static void			handle_file(char *path, int n_file)
 
 int					main(int argc, char **argv)
 {
-	int				fd;
 	int				i;
 
 	if (argc < 2)

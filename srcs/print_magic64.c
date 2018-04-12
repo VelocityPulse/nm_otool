@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 12:12:59 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 12:29:17 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char		*browse_section64(struct load_command *lc, t_data *nm_data,
 	segm = (struct segment_command_64 *)lc;
 	sect = (struct section_64*)(segm + 1);
 	j = 0;
-	while (j < nm_bsp64(nm_data, segm->nsects))
+	while (j < (int)nm_bsp64(nm_data, segm->nsects))
 	{
 		if (!trigger_false_pointer(nm_data, (void *)sect))
 			return ((void *)-1);
@@ -115,7 +115,6 @@ static int		help_print64(t_data *nm_data, t_nmlist64 *list)
 int				print_output64(t_data *nm_data)
 {
 	t_nmlist64	*list;
-	char		type;
 
 	list = nm_data->nlist64_list;
 	if (nm_data->obj_name != NULL)
