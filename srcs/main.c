@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 14:27:25 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 17:41:53 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,15 @@ void				ft_nm(t_data *nm_data, char *ptr)
 
 	magic_number = *(unsigned int *)ptr;
 	nm_data->ptr = ptr;
-	nm_data->endian = MAGIC;
-	ft_printf("magic : %x\n", magic_number);
-	if (magic_number == FAT_MAGIC_64)
+	set_endian(nm_data, magic_number);
+//	ft_printf("magic : %x\n", magic_number);
+	if (magic_number == FAT_MAGIC_64 || magic_number == FAT_CIGAM_64)
 		return ((void)handle_fat64(nm_data, ptr));
-	if (magic_number == FAT_MAGIC)
+	if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
 		return ((void)handle_fat32(nm_data, ptr));
-	if (magic_number == MH_MAGIC_64)
+	if (magic_number == MH_MAGIC_64 || magic_number == MH_CIGAM_64)
 		return ((void)handle_magic64(nm_data, ptr));
-	if (magic_number == MH_MAGIC)
-		return ((void)handle_magic32(nm_data, ptr));
-	nm_data->endian = CIGAM;
-	if (ft_strncmp(ptr, ARMAG, SARMAG) == 0)
-		return ((void)handle_ar(nm_data, ptr));
-	if (magic_number == FAT_CIGAM_64)
-		return ((void)handle_fat64(nm_data, ptr));
-	if (magic_number == FAT_CIGAM)
-		return ((void)handle_fat32(nm_data, ptr));
-	if (magic_number == MH_CIGAM_64)
-		return ((void)handle_magic64(nm_data, ptr));
-	if (magic_number == MH_CIGAM)
+	if (magic_number == MH_MAGIC || magic_number == MH_CIGAM)
 		return ((void)handle_magic32(nm_data, ptr));
 	ft_printf("\nERROR in file [%s] : File not receognized\n",
 			nm_data->file_name);
@@ -88,9 +77,10 @@ static void			init_nm_data(t_data *nm_data, int offset, char *file_name,
 	nm_data->nlist64_list = NULL;
 	nm_data->nlist32_list = NULL;
 	nm_data->file_name = file_name;
+	nm_data->arch_name = NULL;
 	nm_data->obj_name = NULL;
 	nm_data->n_file = n_file;
-	nm_data->is_fat = FALSE;
+	nm_data->nfat_arch = 0;
 }
 
 static void			handle_file(char *path, int n_file)

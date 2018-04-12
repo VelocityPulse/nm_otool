@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 14:50:52 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 17:23:11 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct	s_nmlist64
 typedef struct	s_nmlist32
 {
 	struct nlist		*ptr;
-	struct s_nmlist32		*next;
-	struct s_nmlist32		*back;
+	struct s_nmlist32	*next;
+	struct s_nmlist32	*back;
 	char				*str;
 }				t_nmlist32;
 
@@ -53,10 +53,10 @@ typedef struct	s_data
 	int				ptr_offset;
 	char			endian:2;
 	char			mapped:2;
-	int				is_fat;
-	char			*arch_name;
 	int				n_file;
+	int				nfat_arch;
 	char			*file_name;
+	char			*arch_name;
 	char			*obj_name;
 	void			*header;
 	void			*first_load_command;
@@ -65,6 +65,7 @@ typedef struct	s_data
 }				t_data;
 
 void				ft_nm(t_data *nm_data, char *ptr);
+void				set_endian(t_data *nm_data, unsigned int magic_number);
 void				free_nm_data(t_data *nm_data);
 
 int					trigger_false_pointer(t_data *nm_data, char *ptr);
@@ -84,7 +85,11 @@ void				free_nlist32(t_nmlist32 **begin);
 unsigned int		nm_bsp32(t_data *nm_data, unsigned int value);
 
 int					handle_fat64(t_data *nm_data, char *ptr);
+int					start_arch64(t_data *nm_data, char *ptr, int offset,
+		struct fat_arch_64 *fa);
 int					handle_fat32(t_data *nm_data, char *ptr);
+int					start_arch32(t_data *nm_data, char *ptr, int offset,
+		struct fat_arch *fa);
 
 int					handle_ar(t_data *nm_data, char *ptr);
 

@@ -6,7 +6,7 @@
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/12 14:16:26 by cchameyr         ###   ########.fr        #
+#    Updated: 2018/04/12 17:25:46 by cchameyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,10 @@ FILES =			main.c \
 				print_magic64.c \
 				handle_magic32.c \
 				print_magic32.c \
-				handle_fat.c \
-				handle_ar.c
+				handle_fat32.c \
+				handle_fat64.c \
+				handle_ar.c \
+				set_endian.c
 
 SRCS =			$(addprefix srcs/, $(FILES))
 

@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 11:08:05 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 14:28:04 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/12 16:34:46 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ static int		handle_ar_obj(t_data *nm_data, void *ptr, int ptr_offset,
 	sub_nm_data.ptr = ptr;
 	sub_nm_data.ptr_offset = ptr_offset;
 	sub_nm_data.file_name = nm_data->file_name;
+	sub_nm_data.arch_name = NULL;
 	sub_nm_data.obj_name = obj_name;
 	sub_nm_data.n_file = ++nm_data->n_file;
+	sub_nm_data.nfat_arch = nm_data->nfat_arch;
 	sub_nm_data.nlist64_list = NULL;
 	sub_nm_data.nlist32_list = NULL;
-	sub_nm_data.is_fat = FALSE;
 	if (ft_strcmp(obj_name, SYMDEF_SORTED) != 0)
 	{
 		ft_nm(&sub_nm_data, sub_nm_data.ptr);
