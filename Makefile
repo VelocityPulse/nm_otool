@@ -5,69 +5,95 @@
 #                                                     +:+ +:+         +:+      #
 #    By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/01/09 12:41:58 by cchameyr          #+#    #+#              #
-#    Updated: 2018/04/12 17:25:46 by cchameyr         ###   ########.fr        #
+#    Created: 2016/09/05 16:30:43 by cchameyr          #+#    #+#              #
+#*   Updated: 2016/09/19 17:50:06 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
-NAME =			ft_nm
+FILES_NM =			main.c \
+						check_security.c \
+						nlist64_list.c \
+						nlist32_list.c \
+						free_list.c \
+						handle_magic64.c \
+						print_magic64.c \
+						handle_magic32.c \
+						print_magic32.c \
+						handle_fat32.c \
+						handle_fat64.c \
+						handle_ar.c \
+						set_endian.c
 
-FILES =			main.c \
-				check_security.c \
-				nlist64_list.c \
-				nlist32_list.c \
-				free_list.c \
-				handle_magic64.c \
-				print_magic64.c \
-				handle_magic32.c \
-				print_magic32.c \
-				handle_fat32.c \
-				handle_fat64.c \
-				handle_ar.c \
-				set_endian.c
 
-SRCS =			$(addprefix srcs/, $(FILES))
+FILES_OTOOL =			main.c
 
-OBJS =			$(addprefix objs/, $(FILES:.c=.o))
+SRCS_NM =				$(addprefix srcs_nm/, $(FILES_NM))
 
-DEBUG = 		-g -fsanitize=address
+SRCS_OTOOL =			$(addprefix srcs_otool/, $(FILES_OTOOL))
 
-FLAGS =			-Wall -Werror -Wextra #$(DEBUG) TODO UNCOMMENT HERE
+OBJS_NM =				$(addprefix obj_nm/, $(FILES_NM:.c=.o))
 
-RM =			rm -rf
+OBJS_OTOOL =			$(addprefix obj_otool/, $(FILES_OTOOL:.c=.o))
 
-CC =			gcc
+CC =					gcc
 
-LIBFT =			libft/libft.a
+NAME_NM =				ft_nm
 
-all: $(NAME)
+NAME_OTOOL =			ft_otool
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+LIBFT =					libft/libft.a
 
-$(OBJS):
-	$(CC) $(FLAGS) -c $(SRCS)
-	@make objs_mv
+DEBUGSEGFAULT =			-fsanitize=address
 
-objs_mv:
-	@mkdir objs
-	@mv $(FILES:.c=.o) ./objs
+FLAGS =					#-Wall -Wextra -Werror #$(DEBUGSEGFAULT)
 
-objs_rm:
-	@$(RM) objs
-	@$(RM) $(FILES:.c=.o)
+RM =					rm -rf
+
+all: $(NAME_OTOOL) $(NAME_NM)
+
+$(NAME_OTOOL): $(LIBFT) $(OBJS_OTOOL)
+	$(CC) $(FLAGS) $(OBJS_OTOOL) $(LIBFT) -o $(NAME_OTOOL)
+
+$(OBJS_OTOOL):
+	$(CC) $(FLAGS) -c $(SRCS_OTOOL)
+	@make obj_otool_mv
+
+obj_otool_mv:
+	@mkdir obj_otool
+	@mv $(FILES_OTOOL:.c=.o) ./obj_otool/
+
+obj_otool_rm:
+	@$(RM) ./obj_otool
+	@$(RM) $(FILES_OTOOL:.c=.o)
+
+
+$(NAME_NM): $(LIBFT) $(OBJS_NM)
+	$(CC) $(FLAGS) $(OBJS_NM) $(LIBFT) -o $(NAME_NM)
+
+$(OBJS_NM):
+	$(CC) $(FLAGS) -c $(SRCS_NM)
+	@make obj_nm_mv
+
+obj_nm_mv:
+	@mkdir obj_nm
+	@mv $(FILES_NM:.c=.o) ./obj_nm/
+
+obj_nm_rm:
+	@$(RM) ./obj_nm
+	@$(RM) $(FILES_NM:.c=.o)
+
 
 $(LIBFT):
-	make -C ./libft
+	make -C ./libft/
 
-clean: objs_rm
-	make clean -C ./libft
+clean: obj_nm_rm obj_otool_rm
+	make clean -C ./libft/
 
 fclean: clean
-	$(RM) $(LIBFT) $(NAME)
+	$(RM) $(LIBFT) $(NAME_NM) $(NAME_OTOOL)
 
 re: fclean all
 
-r: objs_rm
-	$(RM) $(NAME)
+r: obj_nm_rm obj_otool_rm
+	$(RM) $(NAME_NM) $(NAME_OTOOL)
 	@make

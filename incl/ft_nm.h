@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 11:33:29 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 16:04:57 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <mach-o/ranlib.h>
 # include <sys/mman.h>
 # include <sys/stat.h>
-
-# include "../../Perso/debug.h"
 
 # define MAGIC 0
 # define CIGAM 1
