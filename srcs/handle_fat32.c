@@ -6,13 +6,13 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:17:28 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 12:23:05 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:14:43 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
 
-static int		init_sub_nm_data(t_data *nm_data, t_data *sub_nm_data,
+static int			init_sub_nm_data(t_data *nm_data, t_data *sub_nm_data,
 		char *ptr, int offset)
 {
 	if (!trigger_false_pointer(nm_data, ptr))
@@ -22,6 +22,8 @@ static int		init_sub_nm_data(t_data *nm_data, t_data *sub_nm_data,
 	sub_nm_data->n_file = nm_data->n_file;
 	sub_nm_data->nfat_arch = nm_data->nfat_arch;
 	sub_nm_data->file_name = nm_data->file_name;
+	sub_nm_data->has_x86_64 = nm_data->has_x86_64;
+	sub_nm_data->has_i386 = nm_data->has_i386;
 	sub_nm_data->obj_name = NULL;
 	sub_nm_data->ptr = ptr;
 	if (offset != 0)
@@ -53,41 +55,35 @@ int				start_arch32(t_data *nm_data, char *ptr, int offset,
 	return (_SUCCESS_);
 }
 
-static int		check_arch32(t_data *nm_data, struct fat_arch *fa, char *ptr)
+static int			check_arch32(t_data *nm_data, struct fat_arch *fa, char *ptr)
 {
-	int				ret;
 	int				offset;
 	static int		arch64_printed = 0;
 
-	ret = _SUCCESS_;
 	offset = nm_bsp32(nm_data, fa->offset);
 	if (!trigger_false_pointer(nm_data, (void *)ptr + offset))
 		return (_ERROR_);
 	if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_X86_64 && !arch64_printed)
 	{
-		ret = start_arch32(nm_data, ptr, offset, fa);
 		arch64_printed = 1;
+		return (start_arch32(nm_data, ptr, offset, fa));
 	}
 	else if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_I386 &&
 			!nm_data->has_x86_64)
-		ret = start_arch32(nm_data, ptr, offset, fa);
+		return (start_arch32(nm_data, ptr, offset, fa));
 	else if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_POWERPC)
-		ret = start_arch32(nm_data, ptr, offset, fa);
-	return (ret);
+		return (start_arch32(nm_data, ptr, offset, fa));
+	return (_SUCCESS_);
 }
 
-// tester /usr/bin/appletviewer ..... its false
 //TODO make the arch64 parsed for 64
 
-int				count_arch_to_print(t_data *nm_data, char *ptr)
+int					count_arch_to_print(t_data *nm_data,
+		struct fat_header *f_header, struct fat_arch *fa)
 {
 	int					i;
-	struct fat_header	*f_header;
-	struct fat_arch		*fa;
 
 	i = -1;
-	f_header = (struct fat_header *)ptr;
-	fa = (void *)ptr + sizeof(struct fat_header);
 	while (++i < (int)nm_bsp32(nm_data, f_header->nfat_arch))
 	{
 		if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_X86_64 &&
@@ -112,7 +108,7 @@ int				count_arch_to_print(t_data *nm_data, char *ptr)
 	return (_SUCCESS_);
 }
 
-int				handle_fat32(t_data *nm_data, char *ptr)
+int					handle_fat32(t_data *nm_data, char *ptr)
 {
 	int					i;
 	int					ret;
@@ -127,7 +123,7 @@ int				handle_fat32(t_data *nm_data, char *ptr)
 		return (_ERROR_);
 	nm_data->has_x86_64 = 0;
 	nm_data->has_i386 = 0;
-	if (!count_arch_to_print(nm_data, ptr))
+	if (!count_arch_to_print(nm_data, f_header, fa))
 		return (_ERROR_);
 	nfat_arch = (int)nm_bsp32(nm_data, f_header->nfat_arch);
 	while (++i < nfat_arch)

@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 12:08:53 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:11:18 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static void			init_nm_data(t_data *nm_data, int offset, char *file_name,
 	nm_data->file_name = file_name;
 	nm_data->arch_name = NULL;
 	nm_data->obj_name = NULL;
+	nm_data->has_x86_64 = 0;
+	nm_data->has_i386 = 0;
 	nm_data->n_file = n_file;
 	nm_data->nfat_arch = 0;
 }

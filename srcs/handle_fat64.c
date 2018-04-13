@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:44:22 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 17:41:43 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:10:08 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int		init_sub_nm_data(t_data *nm_data, t_data *sub_nm_data,
 	sub_nm_data->n_file = nm_data->n_file;
 	sub_nm_data->nfat_arch = nm_data->nfat_arch;
 	sub_nm_data->file_name = nm_data->file_name;
+	sub_nm_data->has_x86_64 = nm_data->has_x86_64;
+	sub_nm_data->has_i386 = nm_data->has_i386;
 	sub_nm_data->obj_name = NULL;
 	sub_nm_data->ptr = ptr;
 	if (offset != 0)
