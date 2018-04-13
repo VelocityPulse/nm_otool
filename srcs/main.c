@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 17:41:53 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 12:08:53 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ static void			handle_file(char *path, int n_file)
 	free_nm_data(&nm_data);
 	if (munmap(ptr, buff.st_size) < 0)
 		return ((void)ft_printf("\nERROR in file [%s] : unmmap fail\n", path));
-
 }
 
 int					main(int argc, char **argv)
@@ -117,5 +116,5 @@ int					main(int argc, char **argv)
 	i = 0;
 	while (++i < argc)
 		handle_file(argv[i], argc - 1);
-
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 17:23:11 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 11:33:29 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct	s_data
 	char			*file_name;
 	char			*arch_name;
 	char			*obj_name;
+	char			has_x86_64;
+	char			has_i386;
 	void			*header;
 	void			*first_load_command;
 	t_nmlist64		*nlist64_list;
