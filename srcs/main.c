@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:11:18 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:40:42 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void				ft_nm(t_data *nm_data, char *ptr)
 	magic_number = *(unsigned int *)ptr;
 	nm_data->ptr = ptr;
 	set_endian(nm_data, magic_number);
-//	ft_printf("magic : %x\n", magic_number);
 	if (magic_number == FAT_MAGIC_64 || magic_number == FAT_CIGAM_64)
 		return ((void)handle_fat64(nm_data, ptr));
 	if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
@@ -34,41 +33,43 @@ void				ft_nm(t_data *nm_data, char *ptr)
 		return ((void)handle_magic64(nm_data, ptr));
 	if (magic_number == MH_MAGIC || magic_number == MH_CIGAM)
 		return ((void)handle_magic32(nm_data, ptr));
+	if (ft_strncmp(ptr, ARMAG, SARMAG) == 0)
+		return ((void)handle_ar(nm_data, ptr));
 	ft_printf("\nERROR in file [%s] : File not receognized\n",
 			nm_data->file_name);
 }
 
 /*
-** faire le little-endian avec le ppc-only qui est juste un macho-o tiré de
-** audiodevice
-**
-** les fat contiennent juste plusieurs macho-o simple
-**
-** fat header : pour dire que c'est un fat
-** fat arch : pour dire combien il y a de mach-o
-** Structure Universal Binaries (Fat files):
-** -----------------------------------
-** |   - Fat Header                  |
-** |   - Fat Arch                    |
-** -----------------------------------
-** -----------------------------------
-** |   - Mach-O Header               |
-** |                                 |
-** ----------------------------------
-**
-** les archies : .a et .so se parsent de la meme maniere
-** regroupe tout pleins de mach-o
-**
-** Structure Archive (build with ar, example with an archive composed of
-** 4 object file):
-** ----------------------------------
-** |   - char [8]magic -> "!<arch>\n"|
-** -----------------------------------
-** -----------------------------------
-** |   - struct ar_hdr               |
-** |   - Mach-O                      |
-** -----------------------------------
-*/
+ ** faire le little-endian avec le ppc-only qui est juste un macho-o tiré de
+ ** audiodevice
+ **
+ ** les fat contiennent juste plusieurs macho-o simple
+ **
+ ** fat header : pour dire que c'est un fat
+ ** fat arch : pour dire combien il y a de mach-o
+ ** Structure Universal Binaries (Fat files):
+ ** -----------------------------------
+ ** |   - Fat Header                  |
+ ** |   - Fat Arch                    |
+ ** -----------------------------------
+ ** -----------------------------------
+ ** |   - Mach-O Header               |
+ ** |                                 |
+ ** ----------------------------------
+ **
+ ** les archies : .a et .so se parsent de la meme maniere
+ ** regroupe tout pleins de mach-o
+ **
+ ** Structure Archive (build with ar, example with an archive composed of
+ ** 4 object file):
+ ** ----------------------------------
+ ** |   - char [8]magic -> "!<arch>\n"|
+ ** -----------------------------------
+ ** -----------------------------------
+ ** |   - struct ar_hdr               |
+ ** |   - Mach-O                      |
+ ** -----------------------------------
+ */
 
 static void			init_nm_data(t_data *nm_data, int offset, char *file_name,
 		int n_file)
