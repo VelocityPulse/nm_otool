@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 17:32:02 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:51:51 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int			check_nlist64(t_data *nm_data, struct nlist_64 *array,
 		add_nlist64(&array[i], &nm_data->nlist64_list,
 				stringtable + nm_bsp64(nm_data, array[i].n_un.n_strx));
 	return (_SUCCESS_);
-
 }
 
 static int			browse_nlists64(t_data *nm_data, int nsyms, int symoff,
@@ -57,7 +56,7 @@ static int			browse_nlists64(t_data *nm_data, int nsyms, int symoff,
 	return (_SUCCESS_);
 }
 
-int				handle_magic64(t_data *nm_data, char *ptr)
+int					handle_magic64(t_data *nm_data, char *ptr)
 {
 	int						i;
 	struct mach_header_64	*header;

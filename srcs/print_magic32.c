@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 14:24:18 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:19:22 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 15:01:12 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char		*browse_section32(struct load_command *lc, t_data *nm_data,
 {
 	struct segment_command	*segm;
 	struct section			*sect;
-	int							j;
+	int						j;
 
 	segm = (struct segment_command *)lc;
 	sect = (struct section*)(segm + 1);
@@ -66,7 +66,7 @@ static char		*browse_segment32(t_data *nm_data, char n_sect)
 
 static char		handle_symtab_sect32(t_data *nm_data, char n_sect)
 {
-	char    *sectname;
+	char	*sectname;
 
 	sectname = browse_segment32(nm_data, n_sect);
 	if (sectname == (char *)-1)
@@ -78,12 +78,12 @@ static char		handle_symtab_sect32(t_data *nm_data, char n_sect)
 		return (-1);
 	}
 	if (ft_strncmp(sectname, SECT_TEXT, ft_strlen(SECT_TEXT)) == 0)
-		return 'T';
+		return ('T');
 	if (ft_strncmp(sectname, SECT_DATA, ft_strlen(SECT_DATA)) == 0)
-		return 'D';
+		return ('D');
 	if (ft_strncmp(sectname, SECT_BSS, ft_strlen(SECT_BSS)) == 0)
-		return 'B';
-	return 'S';
+		return ('B');
+	return ('S');
 }
 
 static int		help_print(t_data *nm_data, t_nmlist32 *list)

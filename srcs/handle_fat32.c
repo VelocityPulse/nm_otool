@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:17:28 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:25:57 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:54:31 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int			init_sub_nm_data(t_data *nm_data, t_data *sub_nm_data,
 	return (_SUCCESS_);
 }
 
-int				start_arch32(t_data *nm_data, char *ptr, int offset,
+int					start_arch32(t_data *nm_data, char *ptr, int offset,
 		struct fat_arch *fa)
 {
 	struct fat_header	*f_header;
@@ -55,7 +55,8 @@ int				start_arch32(t_data *nm_data, char *ptr, int offset,
 	return (_SUCCESS_);
 }
 
-static int			check_arch32(t_data *nm_data, struct fat_arch *fa, char *ptr)
+static int			check_arch32(t_data *nm_data, struct fat_arch *fa,
+		char *ptr)
 {
 	int				offset;
 	static int		arch64_printed = 0;
@@ -94,8 +95,8 @@ static int			count_arch_to_print32(t_data *nm_data,
 		else if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_I386 &&
 				!nm_data->has_x86_64)
 		{
-				nm_data->has_i386 = 1;
-				nm_data->nfat_arch++;
+			nm_data->has_i386 = 1;
+			nm_data->nfat_arch++;
 		}
 		else if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_POWERPC)
 			nm_data->nfat_arch++;

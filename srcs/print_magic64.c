@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:20:06 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 15:00:51 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,15 @@ static char		*browse_segment64(t_data *nm_data, char n_sect)
 {
 	int					i;
 	int					n_checked;
-	int					ncmds;
+	int					ncmd;
 	char				*str;
 	struct load_command	*lc;
 
-	ncmds = nm_bsp64(nm_data, ((struct mach_header_64 *)nm_data->header)
-			->ncmds);
+	ncmd = nm_bsp64(nm_data, ((struct mach_header_64 *)nm_data->header)->ncmds);
 	lc = (struct load_command *)nm_data->first_load_command;
 	i = -1;
 	n_checked = 0;
-	while (++i < ncmds)
+	while (++i < ncmd)
 	{
 		if (!trigger_false_pointer(nm_data, (void *)lc))
 			return ((char *)-1);
@@ -67,7 +66,7 @@ static char		*browse_segment64(t_data *nm_data, char n_sect)
 
 static char		handle_symtab_sect64(t_data *nm_data, char n_sect)
 {
-	char    *sectname;
+	char	*sectname;
 
 	sectname = browse_segment64(nm_data, n_sect);
 	if (sectname == (char *)-1)
@@ -79,12 +78,12 @@ static char		handle_symtab_sect64(t_data *nm_data, char n_sect)
 		return (-1);
 	}
 	if (ft_strncmp(sectname, SECT_TEXT, ft_strlen(SECT_TEXT)) == 0)
-		return 'T';
+		return ('T');
 	if (ft_strncmp(sectname, SECT_DATA, ft_strlen(SECT_DATA)) == 0)
-		return 'D';
+		return ('D');
 	if (ft_strncmp(sectname, SECT_BSS, ft_strlen(SECT_BSS)) == 0)
-		return 'B';
-	return 'S';
+		return ('B');
+	return ('S');
 }
 
 static int		help_print64(t_data *nm_data, t_nmlist64 *list)

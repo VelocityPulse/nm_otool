@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:40:42 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:53:04 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,36 @@ void				ft_nm(t_data *nm_data, char *ptr)
 }
 
 /*
- ** faire le little-endian avec le ppc-only qui est juste un macho-o tiré de
- ** audiodevice
- **
- ** les fat contiennent juste plusieurs macho-o simple
- **
- ** fat header : pour dire que c'est un fat
- ** fat arch : pour dire combien il y a de mach-o
- ** Structure Universal Binaries (Fat files):
- ** -----------------------------------
- ** |   - Fat Header                  |
- ** |   - Fat Arch                    |
- ** -----------------------------------
- ** -----------------------------------
- ** |   - Mach-O Header               |
- ** |                                 |
- ** ----------------------------------
- **
- ** les archies : .a et .so se parsent de la meme maniere
- ** regroupe tout pleins de mach-o
- **
- ** Structure Archive (build with ar, example with an archive composed of
- ** 4 object file):
- ** ----------------------------------
- ** |   - char [8]magic -> "!<arch>\n"|
- ** -----------------------------------
- ** -----------------------------------
- ** |   - struct ar_hdr               |
- ** |   - Mach-O                      |
- ** -----------------------------------
- */
+** faire le little-endian avec le ppc-only qui est juste un macho-o tiré de
+** audiodevice
+**
+** les fat contiennent juste plusieurs macho-o simple
+**
+** fat header : pour dire que c'est un fat
+** fat arch : pour dire combien il y a de mach-o
+** Structure Universal Binaries (Fat files):
+** -----------------------------------
+** |   - Fat Header                  |
+** |   - Fat Arch                    |
+** -----------------------------------
+** -----------------------------------
+** |   - Mach-O Header               |
+** |                                 |
+** ----------------------------------
+**
+** les archies : .a et .so se parsent de la meme maniere
+** regroupe tout pleins de mach-o
+**
+** Structure Archive (build with ar, example with an archive composed of
+** 4 object file):
+** ----------------------------------
+** |   - char [8]magic -> "!<arch>\n"|
+** -----------------------------------
+** -----------------------------------
+** |   - struct ar_hdr               |
+** |   - Mach-O                      |
+** -----------------------------------
+*/
 
 static void			init_nm_data(t_data *nm_data, int offset, char *file_name,
 		int n_file)
