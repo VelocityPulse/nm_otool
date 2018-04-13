@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:17:28 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:14:43 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:25:57 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ static int			check_arch32(t_data *nm_data, struct fat_arch *fa, char *ptr)
 	return (_SUCCESS_);
 }
 
-//TODO make the arch64 parsed for 64
-
-int					count_arch_to_print(t_data *nm_data,
+static int			count_arch_to_print32(t_data *nm_data,
 		struct fat_header *f_header, struct fat_arch *fa)
 {
 	int					i;
@@ -121,9 +119,7 @@ int					handle_fat32(t_data *nm_data, char *ptr)
 	ret = _SUCCESS_;
 	if ((i = -1) && !trigger_false_pointer(nm_data, (void *)fa))
 		return (_ERROR_);
-	nm_data->has_x86_64 = 0;
-	nm_data->has_i386 = 0;
-	if (!count_arch_to_print(nm_data, f_header, fa))
+	if (!count_arch_to_print32(nm_data, f_header, fa))
 		return (_ERROR_);
 	nfat_arch = (int)nm_bsp32(nm_data, f_header->nfat_arch);
 	while (++i < nfat_arch)

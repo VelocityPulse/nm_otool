@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/12 18:10:22 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:20:06 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ int				print_output64(t_data *nm_data)
 	t_nmlist64	*list;
 
 	list = nm_data->nlist64_list;
+	if (nm_data->arch_name != NULL && nm_data->has_i386 &&
+			nm_data->nfat_arch == 1)
+		ft_printf("%s:\n", nm_data->file_name);
 	if (nm_data->obj_name != NULL)
 		ft_printf("\n%s(%s):\n", nm_data->file_name, nm_data->obj_name);
 	else if (nm_data->arch_name != NULL && nm_data->nfat_arch > 1)
