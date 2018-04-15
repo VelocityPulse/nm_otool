@@ -12,7 +12,7 @@
 
 #include "../incl/ft_nm.h"
 
-static t_nmlist32	*new_nmlist32(struct nlist *nl, t_nmlist32 *n,
+t_nmlist32			*new_nmlist32(struct nlist *nl, t_nmlist32 *n,
 		t_nmlist32 *b, char *s)
 {
 	t_nmlist32		*item;

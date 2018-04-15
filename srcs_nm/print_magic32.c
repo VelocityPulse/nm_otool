@@ -103,9 +103,9 @@ static int		help_print(t_data *nm_data, t_nmlist32 *list)
 		return (_ERROR_);
 	if (!(list->ptr->n_type & N_EXT))
 		type += 32;
-	if (type == 'U' || type == 'u')
+	if ((type == 'U' || type == 'u') &&  !nm_data->u_maj)
 		ft_printf("         %c %s\n", type, list->str);
-	else
+	else if ((type == 'U' && type == 'u') && !nm_data->u)
 		ft_printf("%08llx %c %s\n", nm_bsp32(nm_data, list->ptr->n_value),
 				type, list->str);
 	return (_SUCCESS_);

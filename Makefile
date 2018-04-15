@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-FILES_NM =			main.c \
+FILES_NM =				main.c \
 						check_security.c \
 						nlist64_list.c \
 						nlist32_list.c \
@@ -22,8 +22,7 @@ FILES_NM =			main.c \
 						handle_fat32.c \
 						handle_fat64.c \
 						handle_ar.c \
-						set_endian.c
-
+						tools.c
 
 FILES_OTOOL =			main.c
 
@@ -45,7 +44,7 @@ LIBFT =					libft/libft.a
 
 DEBUGSEGFAULT =			-fsanitize=address
 
-FLAGS =					#-Wall -Wextra -Werror #$(DEBUGSEGFAULT)
+FLAGS =					$(DEBUGSEGFAULT) #-Wall -Wextra -Werror #$(DEBUGSEGFAULT)
 
 RM =					rm -rf
 

@@ -23,6 +23,9 @@
 # include <sys/mman.h>
 # include <sys/stat.h>
 
+//debug 
+#include "../../perso/debug.h"
+
 # define MAGIC 0
 # define CIGAM 1
 
@@ -58,6 +61,10 @@ typedef struct	s_data
 	char			*obj_name;
 	char			has_x86_64;
 	char			has_i386;
+	char			r;
+	char			n;
+	char			u;
+	char			u_maj;
 	void			*header;
 	void			*first_load_command;
 	t_nmlist64		*nlist64_list;
@@ -75,14 +82,20 @@ int					print_output64(t_data *nm_data);
 void				add_nlist64(struct nlist_64 *nl, t_nmlist64 **begin,
 		char *str);
 void				free_nlist64(t_nmlist64 **begin);
+t_nmlist64			*new_nmlist64(struct nlist_64 *nl, t_nmlist64 *n,
+		t_nmlist64 *b, char *s);
 unsigned long int	nm_bsp64(t_data *nm_data, unsigned long int value);
+void				order_nlist64_mode(t_data *nm_data);
 
 int					handle_magic32(t_data *nm_data, char *ptr);
 int					print_output32(t_data *nm_data);
 void				add_nlist32(struct nlist *nl, t_nmlist32 **begin,
 		char *str);
 void				free_nlist32(t_nmlist32 **begin);
+t_nmlist32			*new_nmlist32(struct nlist *nl, t_nmlist32 *n,
+		t_nmlist32 *b, char *s);
 unsigned int		nm_bsp32(t_data *nm_data, unsigned int value);
+void				order_nlist32_mode(t_data *nm_data);
 
 int					handle_fat64(t_data *nm_data, char *ptr);
 int					start_arch64(t_data *nm_data, char *ptr, int offset,

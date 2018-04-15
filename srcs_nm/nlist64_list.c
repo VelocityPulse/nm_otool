@@ -12,7 +12,7 @@
 
 #include "../incl/ft_nm.h"
 
-static t_nmlist64	*new_nmlist64(struct nlist_64 *nl, t_nmlist64 *n,
+t_nmlist64	*new_nmlist64(struct nlist_64 *nl, t_nmlist64 *n,
 		t_nmlist64 *b, char *s)
 {
 	t_nmlist64		*item;

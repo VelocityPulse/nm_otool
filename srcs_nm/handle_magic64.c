@@ -81,5 +81,6 @@ int					handle_magic64(t_data *nm_data, char *ptr)
 		if (!trigger_false_pointer(nm_data, (void *)lc))
 			return (_ERROR_);
 	}
+	order_nlist64_mode(nm_data);
 	return (print_output64(nm_data));
 }
