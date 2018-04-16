@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 14:09:44 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 16:12:52 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:40:31 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	print_hex_text(unsigned char *ptr,
 void	print_memory64(long int addr, unsigned char *section,
 		int size, int has_ppc)
 {
-	int				i;
-	
+	int		i;
+
 	i = 0;
 	while (i < size)
 	{
@@ -67,5 +67,4 @@ void	print_memory32(long int addr, unsigned char *section,
 		ft_putchar('\n');
 		i += 16;
 	}
-
 }

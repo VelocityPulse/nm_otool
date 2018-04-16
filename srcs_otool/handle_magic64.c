@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 16:27:24 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:39:27 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int			browse_section64(t_data *nm_data,
 	return (_SUCCESS_);
 }
 
-static int		browse_segment64(t_data *nm_data)
+static int			browse_segment64(t_data *nm_data)
 {
 	int							i;
 	int							ncmd;
@@ -79,7 +79,8 @@ int					handle_magic64(t_data *nm_data, char *ptr)
 	header = (struct mach_header_64 *)ptr;
 	nm_data->header = (void *)header;
 	if (nm_data->arch_name && nm_data->nfat_arch > 1)
-		ft_printf("%s (architecture %s):\n", nm_data->file_name, nm_data->arch_name);
+		ft_printf("%s (architecture %s):\n", nm_data->file_name,
+				nm_data->arch_name);
 	else
 		ft_printf("%s:\n", nm_data->file_name);
 	ft_printf("Contents of (__TEXT,__text) section\n");
