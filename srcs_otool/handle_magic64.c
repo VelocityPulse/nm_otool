@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 15:04:12 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:15:24 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int			browse_section64(t_data *nm_data,
 			if (!trigger_false_pointer(nm_data,
 						nm_data->ptr + nm_bsp64(nm_data, sect->offset)))
 				return (_ERROR_);
-			print_memory64(nm_bsp64(nm_data, sect->addr),
+			print_memory64(nm_bsp64(nm_data, sect->addr), (unsigned char *)
 					nm_data->ptr + nm_bsp64(nm_data, sect->offset),
 					nm_bsp64(nm_data, sect->size));
 		}
