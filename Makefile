@@ -24,7 +24,15 @@ FILES_NM =				main.c \
 						handle_ar.c \
 						tools.c
 
-FILES_OTOOL =			main.c
+FILES_OTOOL =			main.c \
+						check_security.c \
+						handle_magic64.c \
+						handle_magic32.c \
+						handle_fat32.c \
+						handle_fat64.c \
+						handle_ar.c \
+						print_memory.c \
+						tools.c
 
 SRCS_NM =				$(addprefix srcs_nm/, $(FILES_NM))
 
@@ -44,7 +52,7 @@ LIBFT =					libft/libft.a
 
 DEBUGSEGFAULT =			-fsanitize=address
 
-FLAGS =					-Wall -Wextra -Werror #$(DEBUGSEGFAULT)
+FLAGS =					#-Wall -Wextra -Werror #$(DEBUGSEGFAULT)
 
 RM =					rm -rf
 
