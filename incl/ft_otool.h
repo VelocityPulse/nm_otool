@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 15:13:27 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:03:04 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct		s_data
 	char			*obj_name;
 	char			has_x86_64;
 	char			has_i386;
+	char			has_ppc;
 	void			*header;
 	void			*first_load_command;
 }					t_data;
@@ -52,8 +53,10 @@ void				set_endian(t_data *nm_data, unsigned int magic_number);
 
 int					trigger_false_pointer(t_data *nm_data, char *ptr);
 
-void				print_memory64(long int addr, unsigned char *begin, int size);
-void				print_memory32(long int addr, unsigned char  *begin, int size);
+void				print_memory64(long int addr, unsigned char *begin,
+		int size, int has_ppc);
+void				print_memory32(long int addr, unsigned char  *begin,
+		int size, int has_ppc);
 
 int					handle_magic64(t_data *nm_data, char *ptr);
 unsigned long int	nm_bsp64(t_data *nm_data, unsigned long int value);

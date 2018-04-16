@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:17:28 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 14:07:03 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:24:15 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,16 @@ int					start_arch32(t_data *nm_data, char *ptr, int offset,
 	t_data				sub_nm_data;
 
 	f_header = (void *)ptr + offset;
+	ft_bzero((void **)&sub_nm_data, sizeof(t_data));
 	if (!trigger_false_pointer(nm_data,
 				nm_data->ptr + nm_bsp32(nm_data, fa->size)))
 		return (_ERROR_);
 	sub_nm_data.ptr_offset = nm_bsp32(nm_data, fa->size);
 	if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_POWERPC)
+	{
+		sub_nm_data.has_ppc = 1;
 		sub_nm_data.arch_name = "ppc";
+	}
 	else if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_I386)
 		sub_nm_data.arch_name = "i386";
 	else if (nm_bsp32(nm_data, fa->cputype) == CPU_TYPE_X86_64)

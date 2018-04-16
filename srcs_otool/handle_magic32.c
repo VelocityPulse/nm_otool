@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:42:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 15:58:00 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:27:10 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int		browse_section32(t_data *nm_data, struct segment_command *segm)
 				return (_ERROR_);
 			print_memory32(nm_bsp32(nm_data, sect->addr), (unsigned char *)
 					nm_data->ptr + nm_bsp32(nm_data, sect->offset),
-					nm_bsp32(nm_data, sect->size));
+					nm_bsp32(nm_data, sect->size), nm_data->has_ppc);
 		}
 		sect++;
 		j++;
@@ -77,7 +77,10 @@ int				handle_magic32(t_data *nm_data, char *ptr)
 
 	header = (struct mach_header *)ptr;
 	nm_data->header = (void *)header;
-	ft_printf("%s:\n", nm_data->file_name);
+	if (nm_data->arch_name && nm_data->nfat_arch > 1)
+		ft_printf("%s (architecture %s):\n", nm_data->file_name, nm_data->arch_name);
+	else
+		ft_printf("%s:\n", nm_data->file_name);
 	ft_printf("Contents of (__TEXT,__text) section\n");
 	lc = (void *)ptr + sizeof(struct mach_header);
 	if (!trigger_false_pointer(nm_data, (void *)lc))

@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:40 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 15:15:24 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:27:24 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int			browse_section64(t_data *nm_data,
 				return (_ERROR_);
 			print_memory64(nm_bsp64(nm_data, sect->addr), (unsigned char *)
 					nm_data->ptr + nm_bsp64(nm_data, sect->offset),
-					nm_bsp64(nm_data, sect->size));
+					nm_bsp64(nm_data, sect->size), nm_data->has_ppc);
 		}
 		sect++;
 		j++;
@@ -78,7 +78,10 @@ int					handle_magic64(t_data *nm_data, char *ptr)
 
 	header = (struct mach_header_64 *)ptr;
 	nm_data->header = (void *)header;
-	ft_printf("%s:\n", nm_data->file_name);
+	if (nm_data->arch_name && nm_data->nfat_arch > 1)
+		ft_printf("%s (architecture %s):\n", nm_data->file_name, nm_data->arch_name);
+	else
+		ft_printf("%s:\n", nm_data->file_name);
 	ft_printf("Contents of (__TEXT,__text) section\n");
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	if (!trigger_false_pointer(nm_data, (void *)lc))
