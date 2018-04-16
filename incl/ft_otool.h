@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 16:41:06 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 17:16:23 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,8 @@ int					start_arch32(t_data *nm_data, char *ptr, int offset,
 		struct fat_arch *fa);
 
 int					handle_ar(t_data *nm_data, char *ptr);
+
+void				print_by_security(t_data *nm_data, char *str);
+void				print_by_security_endl(t_data *nm_data, char *str);
 
 #endif

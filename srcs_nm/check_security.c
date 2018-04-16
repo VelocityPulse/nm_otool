@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 14:41:49 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 15:53:28 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 17:53:22 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,43 @@ int		trigger_false_pointer(t_data *nm_data, char *ptr)
 		return (_ERROR_);
 	}
 	return (_SUCCESS_);
+}
+
+void	print_by_security(t_data *nm_data, char *str)
+{
+	unsigned int		i;
+	char				*ptr;
+	unsigned int		ptr_end;
+	unsigned int		ui_str;
+
+	i = 0;
+	ptr = nm_data->ptr;
+	ptr_end = (unsigned int)nm_data->ptr + nm_data->ptr_offset;
+	ui_str = (unsigned int)str;
+	while (ui_str < ptr_end && str[i])
+	{
+		ui_str++;
+		i++;
+	}
+	ft_putnstr(str, i);
+}
+
+void	print_by_security_endl(t_data *nm_data, char *str)
+{
+	unsigned int		i;
+	char				*ptr;
+	unsigned int		ptr_end;
+	unsigned int		ui_str;
+
+	i = 0;
+	ptr = nm_data->ptr;
+	ptr_end = (unsigned int)nm_data->ptr + nm_data->ptr_offset;
+	ui_str = (unsigned int)str;
+	while (ui_str < ptr_end && str[i])
+	{
+		ui_str++;
+		i++;
+	}
+	ft_putnstr(str, i);
+	ft_putchar('\n');
 }

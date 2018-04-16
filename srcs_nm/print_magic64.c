@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 13:35:51 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/16 10:16:06 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 17:31:18 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,8 @@ static char		handle_symtab_sect64(t_data *nm_data, char n_sect)
 	return ('S');
 }
 
-static int		help_print64(t_data *nm_data, t_nmlist64 *list)
+static int		help_print64(t_data *nm_data, t_nmlist64 *list, int type)
 {
-	int		type;
-
-	type = list->ptr->n_type & N_TYPE;
 	if (type == N_UNDF)
 		type = 'U';
 	else if (type == N_ABS)
@@ -104,10 +101,15 @@ static int		help_print64(t_data *nm_data, t_nmlist64 *list)
 	if (!(list->ptr->n_type & N_EXT))
 		type += 32;
 	if ((type == 'U' || type == 'u') && !nm_data->u_maj)
-		ft_printf("                 %c %s\n", type, list->str);
+	{
+		ft_printf("                 %c ", type);
+		print_by_security_endl(nm_data, list->str);
+	}
 	else if ((type != 'U' && type != 'u') && !nm_data->u)
-		ft_printf("%016llx %c %s\n", nm_bsp64(nm_data, list->ptr->n_value),
-				type, list->str);
+	{
+		ft_printf("%016llx %c ", nm_bsp64(nm_data, list->ptr->n_value), type);
+		print_by_security_endl(nm_data, list->str);
+	}
 	return (_SUCCESS_);
 }
 
@@ -120,7 +122,11 @@ int				print_output64(t_data *nm_data)
 			nm_data->nfat_arch == 1)
 		ft_printf("%s:\n", nm_data->file_name);
 	if (nm_data->obj_name != NULL)
-		ft_printf("\n%s(%s):\n", nm_data->file_name, nm_data->obj_name);
+	{
+		ft_printf("\n%s(", nm_data->file_name);
+		print_by_security(nm_data, nm_data->obj_name);
+		ft_putstr("):\n");
+	}
 	else if (nm_data->arch_name != NULL && nm_data->nfat_arch > 1)
 		ft_printf("\n%s (for architecture %s):\n", nm_data->file_name,
 				nm_data->arch_name);
@@ -128,7 +134,7 @@ int				print_output64(t_data *nm_data)
 		ft_printf("\n%s:\n", nm_data->file_name);
 	while (list)
 	{
-		if (!help_print64(nm_data, list))
+		if (!help_print64(nm_data, list, list->ptr->n_type & N_TYPE))
 			return (_ERROR_);
 		list = list->next;
 	}

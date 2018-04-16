@@ -50,9 +50,9 @@ NAME_OTOOL =			ft_otool
 
 LIBFT =					libft/libft.a
 
-DEBUGSEGFAULT =			-fsanitize=address
+DEBUGSEGFAULT =			-g3 -fsanitize=address
 
-FLAGS =					-Wall -Wextra -Werror #$(DEBUGSEGFAULT)
+FLAGS =					-Wall -Wextra -Werror $(DEBUGSEGFAULT)
 
 RM =					rm -rf
 
