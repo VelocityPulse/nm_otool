@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 14:24:18 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 15:01:12 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 10:16:27 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ static int		help_print(t_data *nm_data, t_nmlist32 *list)
 		return (_ERROR_);
 	if (!(list->ptr->n_type & N_EXT))
 		type += 32;
-	if ((type == 'U' || type == 'u') &&  !nm_data->u_maj)
+	if ((type == 'U' || type == 'u') && !nm_data->u_maj)
 		ft_printf("         %c %s\n", type, list->str);
-	else if ((type == 'U' && type == 'u') && !nm_data->u)
+	else if ((type != 'U' && type != 'u') && !nm_data->u)
 		ft_printf("%08llx %c %s\n", nm_bsp32(nm_data, list->ptr->n_value),
 				type, list->str);
 	return (_SUCCESS_);

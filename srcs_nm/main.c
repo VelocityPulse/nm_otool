@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:14 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:53:04 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 10:17:42 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void			handle_file(t_data *nm_data, char *path, int n_file)
 		return ((void)ft_printf("\nERROR in file [%s] : unmmap fail\n", path));
 }
 
-static int				handle_option(char *arg, t_data *nm_data, int *n_file)
+static int			handle_option(char *arg, t_data *nm_data, int *n_file)
 {
 	if (arg[0] == '-')
 	{

@@ -6,11 +6,12 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 14:50:08 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 16:04:57 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 09:56:17 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NM_H_
+#ifndef FT_NM_H
+# define FT_NM_H
 
 # include "../libft/libft.h"
 # include <fcntl.h>
@@ -23,32 +24,29 @@
 # include <sys/mman.h>
 # include <sys/stat.h>
 
-//debug 
-#include "../../perso/debug.h"
-
 # define MAGIC 0
 # define CIGAM 1
 
 # define UNMAPPED 0
 # define MAPPED 1
 
-typedef struct	s_nmlist64
+typedef struct		s_nmlist64
 {
 	struct nlist_64		*ptr;
 	struct s_nmlist64	*next;
 	struct s_nmlist64	*back;
 	char				*str;
-}				t_nmlist64;
+}					t_nmlist64;
 
-typedef struct	s_nmlist32
+typedef struct		s_nmlist32
 {
 	struct nlist		*ptr;
 	struct s_nmlist32	*next;
 	struct s_nmlist32	*back;
 	char				*str;
-}				t_nmlist32;
+}					t_nmlist32;
 
-typedef struct	s_data
+typedef struct		s_data
 {
 	char			*ptr;
 	int				ptr_offset;
@@ -69,7 +67,7 @@ typedef struct	s_data
 	void			*first_load_command;
 	t_nmlist64		*nlist64_list;
 	t_nmlist32		*nlist32_list;
-}				t_data;
+}					t_data;
 
 void				ft_nm(t_data *nm_data, char *ptr);
 void				set_endian(t_data *nm_data, unsigned int magic_number);

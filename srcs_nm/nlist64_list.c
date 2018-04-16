@@ -6,13 +6,13 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 14:36:34 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/11 12:14:27 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/16 09:50:26 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/ft_nm.h"
 
-t_nmlist64	*new_nmlist64(struct nlist_64 *nl, t_nmlist64 *n,
+t_nmlist64			*new_nmlist64(struct nlist_64 *nl, t_nmlist64 *n,
 		t_nmlist64 *b, char *s)
 {
 	t_nmlist64		*item;
