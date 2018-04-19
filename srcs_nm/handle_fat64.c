@@ -6,7 +6,7 @@
 /*   By: cchameyr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:44:22 by cchameyr          #+#    #+#             */
-/*   Updated: 2018/04/13 14:54:13 by cchameyr         ###   ########.fr       */
+/*   Updated: 2018/04/19 13:41:33 by cchameyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int					start_arch64(t_data *nm_data, char *ptr, int offset,
 				nm_bsp64(nm_data, fa->size)))
 		return (_ERROR_);
 	ft_nm(&sub_nm_data, (void *)f_header);
+	free_nm_data(&sub_nm_data);
 	return (_SUCCESS_);
 }
 
